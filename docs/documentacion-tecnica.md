@@ -669,5 +669,7 @@ These were found in the final review and deliberately deferred; none affects the
 ## 14. Credits
 
 - **Sprites and backgrounds:** classic Doom graphics from sprite sheets supplied by the owner. The character sheets were ripped by "Falcon Delta" (who asks for credit); the widescreen graphics sheet carries the note "Rip by RandomAccess29, No Credit Needed". Doom, the Marine, the Imp and the Cyberdemon are properties of id Software / Bethesda. The page footer carries the credit line.
+- **License:** the original code and documentation are MIT-licensed (Copyright (c) 2026 elchuz); see [`LICENSE`](../LICENSE). The license does **not** cover the Doom artwork, which stays with its owners.
+- **Source repository:** https://github.com/chuz93/erre-ese-a (linked from the page footer).
 - **Built with:** Next.js, React, TypeScript, Vitest, pngjs, Rust, and hosted on Vercel.
 - **Development assistance:** Claude Code (Anthropic).

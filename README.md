@@ -57,6 +57,12 @@ See [docs/guion-presentacion.md](docs/guion-presentacion.md) (Spanish): what to 
 - [ ] Press `→` on step 9 and `←` on step 1: nothing breaks.
 - [ ] Hold `→`: only one step per press.
 
+## License
+
+The original code and documentation are released under the [MIT License](LICENSE) (Copyright (c) 2026 elchuz). The MIT license does **not** cover the Doom artwork (sprites, backgrounds and sprite sheets); that remains the property of its owners, as described under Credits and in the `LICENSE` file.
+
+Source code: https://github.com/chuz93/erre-ese-a
+
 ## Credits
 
 Sprites ripped by Falcon Delta. Doom, the Marine, the Imp and the Cyberdemon are id Software/Bethesda properties; the sprite sheets are in `assets/sprite-sheets/` and the cropped frames in `public/sprites/` (made by `scripts/extract-sprites.mjs`).

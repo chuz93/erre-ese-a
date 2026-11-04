@@ -219,3 +219,8 @@ kbd {
   opacity: 1;
   color: var(--result);
 }
+
+.credit a {
+  color: inherit;
+  text-decoration: underline;
+}

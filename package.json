@@ -2,6 +2,8 @@
   "name": "rsa-demo",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
+  "repository": { "type": "git", "url": "https://github.com/chuz93/erre-ese-a.git" },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

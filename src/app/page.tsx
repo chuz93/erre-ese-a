@@ -12,6 +12,8 @@ import { isNavKey, nextIndex, tapKey } from "../story/navigation";
 import { buildSteps, DEMO } from "../story/steps";
 import { wheelModel } from "../story/wheel";
 
+const REPO_URL = "https://github.com/chuz93/erre-ese-a";
+
 export default function Page() {
   const [engine, setEngine] = useState<RsaEngine | null>(null);
   const [sprites, setSprites] = useState<SpriteSet | null>(null);
@@ -77,7 +79,10 @@ export default function Page() {
             <EquationStrip lines={step.lines} stepId={step.id} />
             <ProgressBar index={index} total={steps.length} />
             <footer className="credit">
-              Sprites extraídos por Falcon Delta. Doom es una marca de id Software/Bethesda. &nbsp;·&nbsp; motor:{" "}
+              <a href={REPO_URL} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
+                Código: github.com/chuz93/erre-ese-a
+              </a>
+              &nbsp;·&nbsp; Sprites extraídos por Falcon Delta. Doom es una marca de id Software/Bethesda. &nbsp;·&nbsp; motor:{" "}
               {engine?.kind}
             </footer>
           </>
