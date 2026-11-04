@@ -37,9 +37,6 @@ export function PowerWheel({ model }: { model: WheelModel }) {
               <text x={x} y={y + 12} textAnchor="middle" fontSize={40} fontWeight={700} fill="#f3e6d8">
                 {value}
               </text>
-              <text x={x} y={y + 84} textAnchor="middle" fontSize={32} fill="#b9a590">
-                {`${model.base}^${i}`}
-              </text>
             </g>
           );
         })}

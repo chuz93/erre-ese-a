@@ -102,3 +102,5 @@ Each step shows its equation in the lower strip with the live numbers highlighte
 - **Stage background:** the Doom widescreen graphics panel with the grey mountains (darkened for readability) replaces the plain gradient.
 - **Not redeployed:** the owner asked not to redeploy; the live site still shows the previous version until they say so.
 - **The Marine receives the public key (step 4):** the Marine now has a speech bubble ("Recibo (e, n) = (3, 33)") and a key packet 🔑 travels from the Cyberdemon to the Marine; in step 5 the Marine's bubble reads "Cifro 4 con (3, 33)".
+- **Step 8 wheel simplified:** the exponent labels (4^0 to 4^4) and the exponent chains in its captions were removed; the wheel shows only the five values and the jumps 4 → 31 → 4.
+- **Presentation script:** `docs/guion-presentacion.md` (Spanish): timed step-by-step script, the math behind each step, likely questions and a plan B.

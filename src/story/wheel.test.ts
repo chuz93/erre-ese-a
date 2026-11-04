@@ -14,9 +14,13 @@ describe("wheelModel", () => {
     expect(model.path).toEqual([1, 3, 1]);
   });
 
-  test("captions narrate start, encrypt and decrypt with the real numbers", () => {
-    expect(model.captions[0]).toBe("Inicio: m = 4^1 = 4");
-    expect(model.captions[1]).toBe("Cifrar: (4^1)^3 = 4^3 = 31");
-    expect(model.captions[2]).toBe("Descifrar: (4^3)^7 = 4^21 = 4^(21 mod 5) = 4^1 = 4");
+  test("captions narrate start, encrypt and decrypt as plain jumps between values", () => {
+    expect(model.captions[0]).toBe("Inicio: m = 4");
+    expect(model.captions[1]).toBe("Cifrar (elevar a e = 3): 4 → 31");
+    expect(model.captions[2]).toBe("Descifrar (elevar a d = 7): 31 → 4");
+  });
+
+  test("captions carry no exponent chains (nothing like 4^21)", () => {
+    for (const caption of model.captions) expect(caption).not.toContain("^");
   });
 });

@@ -40,6 +40,10 @@ Open the site through the local server, not by double-clicking `out/index.html` 
 1. `npx vercel login`, then `npx vercel --prod` from this folder (or import the repository in the Vercel dashboard). Framework preset: Next.js; the static export is configured in `next.config.mjs`.
 2. In the Vercel project, Settings → Domains → add your domain and set the DNS records Vercel shows.
 
+## Presentation script
+
+See [docs/guion-presentacion.md](docs/guion-presentacion.md) (Spanish): what to say at each step, the math behind it, likely questions.
+
 ## Rehearsal checklist
 
 - [ ] Full run-through with a timer: 8 to 10 minutes for all 9 steps.

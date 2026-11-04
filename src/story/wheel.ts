@@ -20,9 +20,9 @@ export function wheelModel(engine: RsaEngine, demo: typeof DEMO): WheelModel {
   const len = values.length;
   const path: [number, number, number] = [1 % len, e % len, (e * d) % len];
   const captions: [string, string, string] = [
-    `Inicio: m = ${base}^1 = ${values[path[0]]}`,
-    `Cifrar: (${base}^1)^${e} = ${base}^${path[1]} = ${values[path[1]]}`,
-    `Descifrar: (${base}^${path[1]})^${d} = ${base}^${e * d} = ${base}^(${e * d} mod ${len}) = ${base}^${path[2]} = ${values[path[2]]}`,
+    `Inicio: m = ${values[path[0]]}`,
+    `Cifrar (elevar a e = ${e}): ${values[path[0]]} → ${values[path[1]]}`,
+    `Descifrar (elevar a d = ${d}): ${values[path[1]]} → ${values[path[2]]}`,
   ];
   return { base, values, path, captions };
 }
