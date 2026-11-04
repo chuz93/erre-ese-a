@@ -22,14 +22,14 @@ export function ScaleDial({ engine, n }: { engine: RsaEngine; n: number }) {
 
   const factor = engine.smallestFactor(n);
   const estimate = estimateCrackTime(digits, 1e9);
-  const real = digits > 2;
+  const real = digits >= 100;
 
   return (
     <div className="equations">
       <div className="eq-line" style={{ animationDelay: "0ms" }}>
-        <span className="tone-plain">{`Imp: ${n} ÷ ${factor} = ${n / factor}  →  `}</span>
+        <span className="tone-secret">Toy keys are breakable: </span>
+        <span className="tone-plain">{`${n} ÷ ${factor} = ${n / factor}, so `}</span>
         <span className="tone-result">{`${factor} × ${n / factor} = ${n}`}</span>
-        <span className="tone-plain"> cracked instantly</span>
       </div>
       <div className="dial-row">
         <span className={real ? "tone-secret" : "tone-public"}>{real ? "real n" : "toy n"}</span>

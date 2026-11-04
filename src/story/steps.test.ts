@@ -78,4 +78,13 @@ describe("buildSteps", () => {
     expect(steps[7].scene.secret).toContain("d = 7");
     expect(steps[7].scene.board).toEqual(["e = 3", "n = 33"]);
   });
+
+  test("every caption fits on one line (at most 125 characters)", () => {
+    for (const s of steps) expect(s.caption.length, `step ${s.id}`).toBeLessThanOrEqual(125);
+  });
+
+  test("step 7 says the Imp would win against the toy n = 33", () => {
+    expect(text(steps[6])).toContain("toy n = 33");
+    expect(text(steps[6])).toContain("factor");
+  });
 });

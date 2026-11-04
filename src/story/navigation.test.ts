@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { isNavKey, nextIndex } from "./navigation";
+import { isNavKey, nextIndex, tapKey } from "./navigation";
 
 describe("nextIndex", () => {
   test("ArrowRight moves forward and ArrowLeft moves back", () => {
@@ -15,6 +15,11 @@ describe("nextIndex", () => {
   test("clamps at the first and last step", () => {
     expect(nextIndex(0, "ArrowLeft", 9)).toBe(0);
     expect(nextIndex(8, "ArrowRight", 9)).toBe(8);
+  });
+
+  test("never returns a negative index, even with no steps yet", () => {
+    expect(nextIndex(0, "ArrowRight", 0)).toBe(0);
+    expect(nextIndex(0, "End", 0)).toBe(0);
   });
 
   test("Home and End jump to the ends", () => {
@@ -34,5 +39,14 @@ describe("isNavKey", () => {
       expect(isNavKey(key), key).toBe(true);
     }
     for (const key of ["f", "Enter", " ", "a"]) expect(isNavKey(key), key).toBe(false);
+  });
+});
+
+describe("tapKey", () => {
+  test("a tap on the left third goes back, anywhere else goes forward", () => {
+    expect(tapKey(100, 1000)).toBe("ArrowLeft");
+    expect(tapKey(333, 1000)).toBe("ArrowLeft");
+    expect(tapKey(334, 1000)).toBe("ArrowRight");
+    expect(tapKey(900, 1000)).toBe("ArrowRight");
   });
 });

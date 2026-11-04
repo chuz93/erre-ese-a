@@ -6,3 +6,5 @@ rsa-engine/target/
 next-env.d.ts
 *.tsbuildinfo
 .claude/
+
+.vercel

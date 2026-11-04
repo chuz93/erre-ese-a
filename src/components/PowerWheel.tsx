@@ -34,10 +34,10 @@ export function PowerWheel({ model }: { model: WheelModel }) {
           return (
             <g key={i}>
               <circle cx={x} cy={y} r={50} fill="#1c0f0d" stroke="#6a4a3a" strokeWidth={3} />
-              <text x={x} y={y + 12} textAnchor="middle" fontSize={34} fontWeight={700} fill="#f3e6d8">
+              <text x={x} y={y + 12} textAnchor="middle" fontSize={40} fontWeight={700} fill="#f3e6d8">
                 {value}
               </text>
-              <text x={x} y={y + 78} textAnchor="middle" fontSize={24} fill="#b9a590">
+              <text x={x} y={y + 84} textAnchor="middle" fontSize={32} fill="#b9a590">
                 {`${model.base}^${i}`}
               </text>
             </g>

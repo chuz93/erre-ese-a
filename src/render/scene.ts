@@ -136,11 +136,6 @@ export function drawScene(ctx: CanvasRenderingContext2D, scene: SceneState, time
     });
   }
 
-  // speech bubbles
-  if (scene.marine.bubble) bubble(ctx, scene.marine.bubble, MARINE_X, FLOOR_Y - 360, "#f3e6d8", "#1a0c0c");
-  if (scene.demon.bubble) bubble(ctx, scene.demon.bubble, DEMON_X, FLOOR_Y - 420, "#f3e6d8", "#1a0c0c");
-  if (scene.imp.bubble) bubble(ctx, scene.imp.bubble, IMP_X, FLOOR_Y - 320, "#3b2a1a", "#ffd9a0");
-
   // ciphertext travelling along the wire
   if (scene.wire) {
     const t = (timeMs % 3000) / 3000;
@@ -156,6 +151,11 @@ export function drawScene(ctx: CanvasRenderingContext2D, scene: SceneState, time
     ctx.textBaseline = "middle";
     ctx.fillText(text, x, WIRE_Y + 3);
   }
+
+  // speech bubbles
+  if (scene.marine.bubble) bubble(ctx, scene.marine.bubble, MARINE_X, FLOOR_Y - 360, "#f3e6d8", "#1a0c0c");
+  if (scene.demon.bubble) bubble(ctx, scene.demon.bubble, DEMON_X, FLOOR_Y - 420, "#f3e6d8", "#1a0c0c");
+  if (scene.imp.bubble) bubble(ctx, scene.imp.bubble, IMP_X, FLOOR_Y - 320, "#3b2a1a", "#ffd9a0");
 
   // imp mood icon
   ctx.font = "56px 'Segoe UI Emoji', sans-serif";

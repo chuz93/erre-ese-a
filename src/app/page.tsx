@@ -9,7 +9,7 @@ import { Stage } from "../components/Stage";
 import { loadEngine, type RsaEngine } from "../engine";
 import { fitScale, REF_H, REF_W } from "../render/layout";
 import { loadSprites, type SpriteSet } from "../render/sprites";
-import { isNavKey, nextIndex } from "../story/navigation";
+import { isNavKey, nextIndex, tapKey } from "../story/navigation";
 import { buildSteps, DEMO } from "../story/steps";
 import { wheelModel } from "../story/wheel";
 
@@ -56,7 +56,10 @@ export default function Page() {
   const step = steps[index];
 
   return (
-    <div className="viewport">
+    <div
+      className="viewport"
+      onClick={(e) => setIndex((i) => nextIndex(i, tapKey(e.clientX, view.w), steps.length))}
+    >
       <div className="deck" style={{ transform: `translate(${offsetX}px, ${offsetY}px) scale(${scale})` }}>
         {error ? (
           <div className="loading">{error}</div>

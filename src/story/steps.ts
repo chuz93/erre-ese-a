@@ -60,7 +60,7 @@ export function buildSteps(engine: RsaEngine, demo: typeof DEMO = DEMO): Step[] 
       id: 2,
       title: "Two secret primes",
       caption:
-        "A prime is only divisible by 1 and itself (2, 3, 5, 7, 11…). Every number breaks into primes in exactly one way: primes are its atoms.",
+        "Primes are the atoms of numbers: every number breaks into primes in exactly one way.",
       lines: [
         line(["p = ", "plain"], [`${p}`, "secret"], ["     q = ", "plain"], [`${q}`, "secret"]),
         line([`${p} and ${q} are prime: nothing but 1 and themselves divides them`, "plain"]),
@@ -109,7 +109,7 @@ export function buildSteps(engine: RsaEngine, demo: typeof DEMO = DEMO): Step[] 
       id: 5,
       title: "Build the public key",
       caption:
-        "φ counts the numbers below n sharing no factor with n; (p − 1)(q − 1) only works because p and q are prime. Pick e with no factor in common with φ.",
+        "φ counts the numbers below n sharing no factor with n; (p − 1)(q − 1) works because p and q are prime.",
       lines: [
         line([`φ = (${p} − 1)(${q} − 1) = `, "plain"], [`${phi}`, "secret"]),
         line([`e = ${e},  gcd(${e}, ${phi}) = ${engine.gcd(e, phi)}`, "plain"]),
@@ -148,7 +148,8 @@ export function buildSteps(engine: RsaEngine, demo: typeof DEMO = DEMO): Step[] 
       caption: "The Imp knows n, e and the ciphertext. To get d he needs φ, and φ needs p and q.",
       lines: [
         line(["Imp sees:  n = ", "plain"], [`${n}`, "public"], [",  e = ", "plain"], [`${e}`, "public"], [",  c = ", "plain"], [`${c}`, "result"]),
-        line(["He needs φ to find d, and φ needs p and q. At real size he cannot factor n.", "plain"]),
+        line(["No φ, no d: φ needs p and q, and a real n can't be factored.", "plain"]),
+        line(["(With the toy n = 33 he would simply factor it, as in step 4.)", "plain"]),
       ],
       scene: {
         marine: {},
