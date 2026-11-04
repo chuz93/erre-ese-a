@@ -2,7 +2,7 @@
 
 A keyboard-driven, 9-step animated explanation (on-screen text in Spanish) of RSA (key setup, encryption, decryption, why it works) with small numbers: **p = 3, q = 11, n = 33, φ = 20, e = 3, d = 7, m = 4, c = 31**.
 
-The RSA math runs as Rust compiled to WebAssembly (`rsa-engine/`), with a plain-JS copy of the same math as an automatic fallback. The page footer shows which one is running (`engine: wasm` or `engine: js`).
+The RSA math runs as Rust compiled to WebAssembly (`rsa-engine/`), with a plain-JS copy of the same math as an automatic fallback. The page footer shows which one is running (`motor: wasm` or `motor: js`).
 
 ## Keys
 
@@ -31,7 +31,7 @@ npm run serve:backup # serves out/ at http://localhost:8080
 
 1. `npm run build`
 2. `npm run serve:backup` and open http://localhost:8080 (no internet needed).
-3. To rehearse the fallback path, run `node scripts/serve-out.mjs --no-wasm`: the footer should read `engine: js` and everything else should look identical.
+3. To rehearse the fallback path, run `node scripts/serve-out.mjs --no-wasm`: the footer should read `motor: js` and everything else should look identical.
 
 Open the site through the local server, not by double-clicking `out/index.html` (the page loads its files from the site root).
 

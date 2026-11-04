@@ -77,7 +77,7 @@ Each step shows its equation in the lower strip with the live numbers highlighte
 - **Toy versus real size.** The imp breaks the toy keys (step 4) and fails against real-size keys (step 7). The slide for step 7 makes the switch explicit with a label so the story is honest rather than contradictory.
 - **The real-size timer is an estimate, not a computation.** It is labeled as such on screen. No big-number support is built.
 - **"Why primes" gets a short on-screen explanation in step 2** (unique factorization, the "atoms" idea), and step 5 notes that φ = (p−1)(q−1) works because p and q are prime. Nothing longer than that.
-- **Language is English.**
+- **Language:** English at first, switched to Spanish by the owner (see Constraints).
 - **Stack refinement:** static export of Next.js, Rust compiled to WebAssembly, plus a JS fallback of the same math.
 
 ## Decided by the owner
