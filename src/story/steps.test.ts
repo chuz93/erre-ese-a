@@ -89,6 +89,22 @@ describe("buildSteps", () => {
     expect(steps[6].scene.board).toEqual(["e = 3", "n = 33"]);
   });
 
+  test("step 4: the Marine receives the public key (3, 33), sent from the Cyberdemon", () => {
+    expect(steps[3].scene.marine.bubble).toContain("(3, 33)");
+    expect(steps[3].scene.keyWire?.label).toBe("(3, 33)");
+  });
+
+  test("step 5: the Marine encrypts the message 4 with the public key (3, 33)", () => {
+    const bubble = steps[4].scene.marine.bubble ?? "";
+    expect(bubble).toContain("4");
+    expect(bubble).toContain("(3, 33)");
+    expect(steps[4].scene.keyWire).toBeUndefined();
+  });
+
+  test("every Marine bubble is short enough to stay left of the public board (at most 24 characters)", () => {
+    for (const s of steps) expect((s.scene.marine.bubble ?? "").length, `step ${s.id}`).toBeLessThanOrEqual(24);
+  });
+
   test("every caption fits on one line (at most 125 characters)", () => {
     for (const s of steps) expect(s.caption.length, `step ${s.id}`).toBeLessThanOrEqual(125);
   });

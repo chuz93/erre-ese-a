@@ -12,6 +12,8 @@ export interface SceneState {
   imp: { bubble?: string; mood: "listening" | "cracking" | "winning" | "stuck" };
   /** Ciphertext travelling from the marine to the Cyberdemon. */
   wire?: { label: string };
+  /** The public key travelling from the Cyberdemon to the Marine. */
+  keyWire?: { label: string };
   /** Values everyone can see (the public board). */
   board?: string[];
   /** Values only the Cyberdemon knows. */
@@ -100,9 +102,10 @@ export function buildSteps(engine: RsaEngine, demo: typeof DEMO = DEMO): Step[] 
         line(["Clave pública  (e, n) = ", "plain"], [`(${e}, ${n})`, "public"]),
       ],
       scene: {
-        marine: {},
+        marine: { bubble: `Recibo (e, n) = (${e}, ${n})` },
         demon: {},
         imp: { mood: "listening", bubble: `Conozco e = ${e} y n = ${n}` },
+        keyWire: { label: `(${e}, ${n})` },
         secret: [`p = ${p}`, `q = ${q}`, `φ = ${phi}`],
         board: [`e = ${e}`, `n = ${n}`],
         size: "toy",
@@ -117,7 +120,7 @@ export function buildSteps(engine: RsaEngine, demo: typeof DEMO = DEMO): Step[] 
         line([`c = ${m}^${e} mod ${n} = ${m ** e} mod ${n} = `, "plain"], [`${c}`, "result"]),
       ],
       scene: {
-        marine: { bubble: `${m}` },
+        marine: { bubble: `Cifro ${m} con (${e}, ${n})` },
         demon: {},
         imp: { mood: "listening" },
         wire: { label: `${c}` },

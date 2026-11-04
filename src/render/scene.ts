@@ -41,6 +41,18 @@ function bubble(ctx: CanvasRenderingContext2D, text: string, cx: number, bottom:
   ctx.fillText(text, x + w / 2, y + h / 2 + 2);
 }
 
+function wireChip(ctx: CanvasRenderingContext2D, text: string, x: number, fill: string, ink: string): void {
+  ctx.font = `bold 44px ${FONT}`;
+  const w = ctx.measureText(text).width + 36;
+  ctx.fillStyle = fill;
+  roundRect(ctx, x - w / 2, WIRE_Y - 36, w, 72, 14);
+  ctx.fill();
+  ctx.fillStyle = ink;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(text, x, WIRE_Y + 3);
+}
+
 function label(ctx: CanvasRenderingContext2D, text: string, cx: number): void {
   ctx.font = `600 30px ${FONT}`;
   ctx.fillStyle = "#cdb9a3";
@@ -138,21 +150,11 @@ export function drawScene(ctx: CanvasRenderingContext2D, scene: SceneState, time
     });
   }
 
-  // ciphertext travelling along the wire
-  if (scene.wire) {
-    const t = (timeMs % 3000) / 3000;
-    const x = MARINE_X + 120 + t * (DEMON_X - MARINE_X - 330);
-    ctx.font = `bold 44px ${FONT}`;
-    const text = `🔒 ${scene.wire.label}`;
-    const w = ctx.measureText(text).width + 36;
-    ctx.fillStyle = "#243b5a";
-    roundRect(ctx, x - w / 2, WIRE_Y - 36, w, 72, 14);
-    ctx.fill();
-    ctx.fillStyle = "#bfe0ff";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText(text, x, WIRE_Y + 3);
-  }
+  // packets travelling along the wire: the ciphertext (Marine to Cyberdemon) and the public key (back)
+  const t = (timeMs % 3000) / 3000;
+  const span = DEMON_X - MARINE_X - 330;
+  if (scene.wire) wireChip(ctx, `🔒 ${scene.wire.label}`, MARINE_X + 120 + t * span, "#243b5a", "#bfe0ff");
+  if (scene.keyWire) wireChip(ctx, `🔑 ${scene.keyWire.label}`, MARINE_X + 120 + (1 - t) * span, "#1c4d32", "#9dffc4");
 
   // speech bubbles
   if (scene.marine.bubble) bubble(ctx, scene.marine.bubble, MARINE_X, FLOOR_Y - 360, "#f3e6d8", "#1a0c0c");

@@ -101,3 +101,4 @@ Each step shows its equation in the lower strip with the live numbers highlighte
 - **Step 2 wording:** the "primes are the atoms of numbers" sentence was replaced by a plain definition: a prime is only divisible by 1 and itself, and every number is made by multiplying primes in one way.
 - **Stage background:** the Doom widescreen graphics panel with the grey mountains (darkened for readability) replaces the plain gradient.
 - **Not redeployed:** the owner asked not to redeploy; the live site still shows the previous version until they say so.
+- **The Marine receives the public key (step 4):** the Marine now has a speech bubble ("Recibo (e, n) = (3, 33)") and a key packet 🔑 travels from the Cyberdemon to the Marine; in step 5 the Marine's bubble reads "Cifro 4 con (3, 33)".
