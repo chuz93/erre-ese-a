@@ -1,0 +1,55 @@
+# RSA demo: the Marine, the Cyberdemon and the Imp
+
+A keyboard-driven, 9-step animated explanation of RSA (key setup, encryption, decryption, why it works) with small numbers: **p = 3, q = 11, n = 33, φ = 20, e = 3, d = 7, m = 4, c = 31**.
+
+The RSA math runs as Rust compiled to WebAssembly (`rsa-engine/`), with a plain-JS copy of the same math as an automatic fallback. The page footer shows which one is running (`engine: wasm` or `engine: js`).
+
+## Keys
+
+| Key | Action |
+| --- | --- |
+| `→` or `PageDown` | next step |
+| `←` or `PageUp` | previous step |
+| `Home` / `End` | first / last step |
+| `F` | toggle fullscreen |
+
+Nothing autoplays between steps. Holding a key does not skip steps.
+
+## Run it
+
+```bash
+npm install
+npm run dev          # http://localhost:3000
+npm test             # engine, story and layout tests
+npm run build        # static site in out/
+npm run serve:backup # serves out/ at http://localhost:8080
+```
+
+`npm run build:wasm` rebuilds `public/engine.wasm` from `rsa-engine/` (needs Rust with the `wasm32-unknown-unknown` target). The built file is committed, so Vercel does not need Rust.
+
+## Offline backup for the presentation
+
+1. `npm run build`
+2. `npm run serve:backup` and open http://localhost:8080 (no internet needed).
+3. To rehearse the fallback path, run `node scripts/serve-out.mjs --no-wasm`: the footer should read `engine: js` and everything else should look identical.
+
+Open the site through the local server, not by double-clicking `out/index.html` (the page loads its files from the site root).
+
+## Deploy (Vercel)
+
+1. `npx vercel login`, then `npx vercel --prod` from this folder (or import the repository in the Vercel dashboard). Framework preset: Next.js; the static export is configured in `next.config.mjs`.
+2. In the Vercel project, Settings → Domains → add your domain and set the DNS records Vercel shows.
+
+## Rehearsal checklist
+
+- [ ] Full run-through with a timer: 8 to 10 minutes for all 9 steps.
+- [ ] On the laptop's own screen, then on the classroom projector (or an external monitor) at 1280×720 and 1920×1080. Text readable from the back.
+- [ ] Wi-Fi off, using `npm run serve:backup`.
+- [ ] `F` fullscreen on and off mid-step; resize the window; the step must not change.
+- [ ] Press `→` on step 9 and `←` on step 1: nothing breaks.
+- [ ] Hold `→`: only one step per press.
+- [ ] Step 4 plays once per visit (go back and forward to replay it).
+
+## Credits
+
+Sprites ripped by Falcon Delta. Doom, the Marine, the Imp and the Cyberdemon are id Software/Bethesda properties; the sprite sheets are in `assets/sprite-sheets/` and the cropped frames in `public/sprites/` (made by `scripts/extract-sprites.mjs`).

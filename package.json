@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "test": "vitest run",
-    "build:wasm": "cargo build --manifest-path rsa-engine/Cargo.toml --target wasm32-unknown-unknown --release && node scripts/copy-wasm.mjs"
+    "build:wasm": "cargo build --manifest-path rsa-engine/Cargo.toml --target wasm32-unknown-unknown --release && node scripts/copy-wasm.mjs",
+    "serve:backup": "node scripts/serve-out.mjs"
   },
   "dependencies": {
     "next": "^16.4.5",
