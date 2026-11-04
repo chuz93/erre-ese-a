@@ -93,15 +93,17 @@ const MOOD_ICON: Record<SceneState["imp"]["mood"], string> = {
 export function drawScene(ctx: CanvasRenderingContext2D, scene: SceneState, timeMs: number, sprites: SpriteSet): void {
   ctx.clearRect(0, 0, STAGE_W, STAGE_H);
 
-  // backdrop and floor
-  const sky = ctx.createLinearGradient(0, 0, 0, FLOOR_Y);
-  sky.addColorStop(0, "#1c0b0b");
-  sky.addColorStop(1, "#3a1510");
-  ctx.fillStyle = sky;
-  ctx.fillRect(0, 0, STAGE_W, FLOOR_Y);
-  ctx.fillStyle = "#24120f";
+  // backdrop: the Doom background, scaled to cover the stage, darkened so text and sprites stay readable
+  const bg = sprites.background;
+  const bgScale = Math.max(STAGE_W / bg.width, STAGE_H / bg.height);
+  const bgW = bg.width * bgScale;
+  const bgH = bg.height * bgScale;
+  ctx.drawImage(bg, (STAGE_W - bgW) / 2, (STAGE_H - bgH) / 2, bgW, bgH);
+  ctx.fillStyle = "rgba(12, 6, 6, 0.62)";
+  ctx.fillRect(0, 0, STAGE_W, STAGE_H);
+  ctx.fillStyle = "rgba(10, 5, 5, 0.55)";
   ctx.fillRect(0, FLOOR_Y, STAGE_W, STAGE_H - FLOOR_Y);
-  ctx.fillStyle = "#5a2a1a";
+  ctx.fillStyle = "#6a4a3a";
   ctx.fillRect(0, FLOOR_Y, STAGE_W, 6);
 
   // characters (gentle bob; the Imp fidgets faster)

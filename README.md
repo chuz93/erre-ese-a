@@ -1,6 +1,6 @@
 # RSA demo: the Marine, the Cyberdemon and the Imp
 
-A keyboard-driven, 9-step animated explanation (on-screen text in Spanish) of RSA (key setup, encryption, decryption, why it works) with small numbers: **p = 3, q = 11, n = 33, φ = 20, e = 3, d = 7, m = 4, c = 31**.
+A keyboard-driven, 8-step animated explanation (on-screen text in Spanish) of RSA (key setup, encryption, decryption, why it works) with small numbers: **p = 3, q = 11, n = 33, φ = 20, e = 3, d = 7, m = 4, c = 31**.
 
 The RSA math runs as Rust compiled to WebAssembly (`rsa-engine/`), with a plain-JS copy of the same math as an automatic fallback. The page footer shows which one is running (`motor: wasm` or `motor: js`).
 
@@ -48,8 +48,12 @@ Open the site through the local server, not by double-clicking `out/index.html` 
 - [ ] `F` fullscreen on and off mid-step; resize the window; the step must not change.
 - [ ] Press `→` on step 9 and `←` on step 1: nothing breaks.
 - [ ] Hold `→`: only one step per press.
-- [ ] Step 4 plays once per visit (go back and forward to replay it).
 
 ## Credits
 
 Sprites ripped by Falcon Delta. Doom, the Marine, the Imp and the Cyberdemon are id Software/Bethesda properties; the sprite sheets are in `assets/sprite-sheets/` and the cropped frames in `public/sprites/` (made by `scripts/extract-sprites.mjs`).
+
+## Changes after the first version
+
+- The old step 4 ("the Imp tries to undo it", with the scale-up dial) was removed on the owner's request because it could confuse more than it showed. The "toy keys are breakable, real ones are not" point now sits inside the Imp's own step (step 6).
+- The stage background is a panel from the Doom widescreen graphics sheet (`assets/MS-DOOM-widescreen.png`), extracted to `public/sprites/background.png` by `scripts/extract-sprites.mjs`. Change `BACKGROUND_PANEL` in that script (4 = grey mountains, 9 = grey alien texture) and re-run it to pick another.

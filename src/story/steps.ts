@@ -20,6 +20,8 @@ export interface SceneState {
 }
 export interface Step {
   id: number;
+  /** Extra visual drawn over the stage for this step. */
+  visual?: "wheel";
   title: string;
   caption: string;
   lines: EquationLine[];
@@ -38,7 +40,6 @@ export function buildSteps(engine: RsaEngine, demo: typeof DEMO = DEMO): Step[] 
   if (d === null) throw new RangeError(`e = ${e} has no inverse modulo ${phi}`);
   const c = engine.encrypt(m, e, n);
   const back = engine.decrypt(c, d, n);
-  const small = engine.smallestFactor(n);
   const k = (e * d - 1) / phi;
   const cycle = engine.powerCycle(m, n);
   const cycleText = [...cycle.slice(1), cycle[0]].join(", ");
@@ -59,7 +60,7 @@ export function buildSteps(engine: RsaEngine, demo: typeof DEMO = DEMO): Step[] 
     {
       id: 2,
       title: "Dos primos secretos",
-      caption: "Los primos son los átomos de los números: todo número se descompone en primos de una única manera.",
+      caption: "Un primo solo se divide entre 1 y entre sí mismo. Todo número se forma multiplicando primos, de una única manera.",
       lines: [
         line(["p = ", "plain"], [`${p}`, "secret"], ["     q = ", "plain"], [`${q}`, "secret"]),
         line([`${p} y ${q} son primos: solo el 1 y ellos mismos los dividen`, "plain"]),
@@ -91,21 +92,6 @@ export function buildSteps(engine: RsaEngine, demo: typeof DEMO = DEMO): Step[] 
     },
     {
       id: 4,
-      title: "El Imp intenta deshacerlo",
-      caption: "Ir hacia atrás es factorizar. Con un número de juguete es instantáneo; con uno real, imposible.",
-      lines: [
-        line([`Imp: ${n} ÷ ${small} = ${n / small}  →  `, "plain"], [`${small} × ${n / small} = ${n}`, "result"]),
-        line(["Claves de juguete: se rompen. Las reales: cientos de dígitos.", "plain"]),
-      ],
-      scene: {
-        marine: {},
-        demon: {},
-        imp: { mood: "winning", bubble: `${n} = ${small} × ${n / small}. Fácil.` },
-        size: "toy",
-      },
-    },
-    {
-      id: 5,
       title: "Construir la clave pública",
       caption: "φ cuenta los números menores que n sin factores comunes con n; (p − 1)(q − 1) funciona porque p y q son primos.",
       lines: [
@@ -123,7 +109,7 @@ export function buildSteps(engine: RsaEngine, demo: typeof DEMO = DEMO): Step[] 
       },
     },
     {
-      id: 6,
+      id: 5,
       title: "Cifrar",
       caption: "El Marine mezcla el mensaje con la clave pública: lo eleva a e y se queda con el resto módulo n.",
       lines: [
@@ -141,13 +127,13 @@ export function buildSteps(engine: RsaEngine, demo: typeof DEMO = DEMO): Step[] 
       },
     },
     {
-      id: 7,
+      id: 6,
       title: "El Imp intercepta",
       caption: "El Imp conoce n, e y el mensaje cifrado. Para hallar d necesita φ, y φ necesita p y q.",
       lines: [
         line(["El Imp ve:  n = ", "plain"], [`${n}`, "public"], [",  e = ", "plain"], [`${e}`, "public"], [",  c = ", "plain"], [`${c}`, "result"]),
         line(["Sin φ no hay d, y φ necesita p y q. Una n real no se factoriza.", "plain"]),
-        line([`(Con n = ${n} de juguete la factoriza, como en el paso 4.)`, "plain"]),
+        line([`(Con n = ${n} de juguete sí la factoriza: ${n} = ${engine.smallestFactor(n)} × ${n / engine.smallestFactor(n)}.)`, "plain"]),
       ],
       scene: {
         marine: {},
@@ -160,7 +146,7 @@ export function buildSteps(engine: RsaEngine, demo: typeof DEMO = DEMO): Step[] 
       },
     },
     {
-      id: 8,
+      id: 7,
       title: "Descifrar con la clave privada",
       caption: "El Cyberdemon conoce φ, así que puede hallar d: el número que deshace a e.",
       lines: [
@@ -177,7 +163,8 @@ export function buildSteps(engine: RsaEngine, demo: typeof DEMO = DEMO): Step[] 
       },
     },
     {
-      id: 9,
+      id: 8,
+      visual: "wheel",
       title: "Por qué funciona",
       caption: "Cifrar y descifrar multiplica los exponentes: e × d = 1 + k × φ, así que las potencias vuelven al mensaje.",
       lines: [

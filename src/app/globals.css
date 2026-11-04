@@ -178,30 +178,6 @@ kbd {
   text-align: right;
 }
 
-.dial-row {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-}
-
-.dial-track {
-  flex: 1;
-  height: 22px;
-  border-radius: 11px;
-  background: #2a1a17;
-  overflow: hidden;
-}
-
-.dial-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--public), var(--result), var(--secret));
-}
-
-.dial-note {
-  font-size: 28px;
-  color: var(--muted);
-}
-
 .wheel-panel {
   position: absolute;
   top: 160px;

@@ -94,3 +94,10 @@ Each step shows its equation in the lower strip with the live numbers highlighte
 - Project structure, repository layout, test approach, and how the WASM/JS fallback is switched.
 - Whether to add an optional "free play" screen letting the audience try other small primes after the main story (only if it does not threaten the Friday deadline).
 - Hosting details (Vercel project setup, domain DNS). The owner will supply domain access when needed.
+
+## Changes requested by the owner after the first build (2026-11-03)
+
+- **Step 4 removed** ("The Imp tries to undo it", including the scale-up dial and the crack-time estimate). The story is now **8 steps**; the old steps 5 to 9 became 4 to 8. The "toy keys are breakable, real keys are not" point stays inside the Imp's step (now step 6), which says the Imp would factor the toy n = 33.
+- **Step 2 wording:** the "primes are the atoms of numbers" sentence was replaced by a plain definition: a prime is only divisible by 1 and itself, and every number is made by multiplying primes in one way.
+- **Stage background:** the Doom widescreen graphics panel with the grey mountains (darkened for readability) replaces the plain gradient.
+- **Not redeployed:** the owner asked not to redeploy; the live site still shows the previous version until they say so.

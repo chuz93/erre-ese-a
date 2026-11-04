@@ -17,3 +17,11 @@ for (const { sheet, frame, out } of SPRITES) {
   writeFileSync(out, PNG.sync.write(cropTransparent(loaded, box)));
   console.log(`${out}: ${box.w}x${box.h} from ${sheet} frame ${frame}`);
 }
+
+// Stage background: one 560x200 panel (index 4 = the grey mountains; index 9 = the grey alien texture)
+// from the widescreen graphics sheet. Panels are separated by 3px borders, so search with gap 1.
+const BACKGROUND_PANEL = 4;
+const wide = loadSheet("assets/MS-DOOM-widescreen.png");
+const panel = findFrames(wide, { gap: 1, minW: 300, minH: 150 })[BACKGROUND_PANEL];
+writeFileSync("public/sprites/background.png", PNG.sync.write(cropTransparent(wide, panel)));
+console.log(`public/sprites/background.png: ${panel.w}x${panel.h} from widescreen sheet panel ${BACKGROUND_PANEL}`);

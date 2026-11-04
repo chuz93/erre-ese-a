@@ -1,4 +1,4 @@
-export type SpriteName = "marine" | "demon" | "imp";
+export type SpriteName = "marine" | "demon" | "imp" | "background";
 export type SpriteSet = Record<SpriteName, HTMLImageElement>;
 
 // Doom sprites (see README / page footer for credit). Cropped once from the supplied
@@ -7,6 +7,7 @@ const FILES: Record<SpriteName, string> = {
   marine: "sprites/marine.png",
   demon: "sprites/cyberdemon.png",
   imp: "sprites/imp.png",
+  background: "sprites/background.png",
 };
 
 function loadImage(src: string): Promise<HTMLImageElement> {
@@ -19,12 +20,13 @@ function loadImage(src: string): Promise<HTMLImageElement> {
 }
 
 export async function loadSprites(): Promise<SpriteSet> {
-  const [marine, demon, imp] = await Promise.all([
+  const [marine, demon, imp, background] = await Promise.all([
     loadImage(FILES.marine),
     loadImage(FILES.demon),
     loadImage(FILES.imp),
+    loadImage(FILES.background),
   ]);
-  return { marine, demon, imp };
+  return { marine, demon, imp, background };
 }
 
 /** Draws a sprite with its feet at (cx, bottomY), scaled to `height`, no smoothing. */
