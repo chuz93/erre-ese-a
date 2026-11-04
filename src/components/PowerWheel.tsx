@@ -13,7 +13,7 @@ function nodePos(i: number, count: number): { x: number; y: number } {
   return { x: CENTER + RADIUS * Math.cos(angle), y: CENTER + RADIUS * Math.sin(angle) };
 }
 
-/** Step 9: powers of m mod n loop around a wheel; encrypting and decrypting move the marker and land back on m. */
+/** Step 8: powers of m mod n loop around a wheel; encrypting and decrypting move the marker and land back on m. */
 export function PowerWheel({ model }: { model: WheelModel }) {
   const [phase, setPhase] = useState(0);
 

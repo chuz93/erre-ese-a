@@ -40,6 +40,10 @@ Open the site through the local server, not by double-clicking `out/index.html` 
 1. `npx vercel login`, then `npx vercel --prod` from this folder (or import the repository in the Vercel dashboard). Framework preset: Next.js; the static export is configured in `next.config.mjs`.
 2. In the Vercel project, Settings → Domains → add your domain and set the DNS records Vercel shows.
 
+## Technical documentation
+
+See [docs/documentacion-tecnica.md](docs/documentacion-tecnica.md): how it was developed, the architecture, how Rust, WebAssembly and Node.js fit together, and a module-by-module code walkthrough.
+
 ## Presentation script
 
 See [docs/guion-presentacion.md](docs/guion-presentacion.md) (Spanish): what to say at each step, the math behind it, likely questions.
