@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { EquationStrip } from "../components/EquationStrip";
+import { PowerWheel } from "../components/PowerWheel";
 import { ProgressBar } from "../components/ProgressBar";
 import { ScaleDial } from "../components/ScaleDial";
 import { Stage } from "../components/Stage";
@@ -10,6 +11,7 @@ import { fitScale, REF_H, REF_W } from "../render/layout";
 import { loadSprites, type SpriteSet } from "../render/sprites";
 import { isNavKey, nextIndex } from "../story/navigation";
 import { buildSteps, DEMO } from "../story/steps";
+import { wheelModel } from "../story/wheel";
 
 export default function Page() {
   const [engine, setEngine] = useState<RsaEngine | null>(null);
@@ -69,6 +71,7 @@ export default function Page() {
               <p>{step.caption}</p>
             </header>
             <Stage scene={step.scene} sprites={sprites} />
+            {step.id === 9 && engine && <PowerWheel key={step.id} model={wheelModel(engine, DEMO)} />}
             {step.id === 4 && engine ? (
               <ScaleDial key={step.id} engine={engine} n={DEMO.p * DEMO.q} />
             ) : (
