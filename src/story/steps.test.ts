@@ -42,4 +42,40 @@ describe("buildSteps", () => {
     expect(steps[6].scene.size).toBe("real");
     expect(steps[6].scene.imp.mood).toBe("stuck");
   });
+
+  test("step 1 has marine bubble containing 4", () => {
+    expect(steps[0].scene.marine.bubble).toContain("4");
+  });
+
+  test("step 6 has wire label 31", () => {
+    expect(steps[5].scene.wire?.label).toBe("31");
+  });
+
+  test("step 7 imp bubble mentions n, e and 31", () => {
+    const bubble = steps[6].scene.imp.bubble ?? "";
+    expect(bubble).toContain("n = 33");
+    expect(bubble).toContain("e = 3");
+    expect(bubble).toContain("31");
+  });
+
+  test("step 8 demon bubble shows 4", () => {
+    expect(steps[7].scene.demon.bubble).toBe("4");
+  });
+
+  test("steps 2 and 3 keep p and q secret, and only n goes public in step 3", () => {
+    expect(steps[1].scene.secret).toEqual(["p = 3", "q = 11"]);
+    expect(steps[1].scene.board ?? []).toEqual([]);
+    expect(steps[2].scene.secret).toEqual(["p = 3", "q = 11"]);
+    expect(steps[2].scene.board).toEqual(["n = 33"]);
+  });
+
+  test("step 5 publishes e and n and keeps phi secret", () => {
+    expect(steps[4].scene.board).toEqual(["e = 3", "n = 33"]);
+    expect(steps[4].scene.secret).toContain("φ = 20");
+  });
+
+  test("step 8 keeps d secret while the board stays public", () => {
+    expect(steps[7].scene.secret).toContain("d = 7");
+    expect(steps[7].scene.board).toEqual(["e = 3", "n = 33"]);
+  });
 });

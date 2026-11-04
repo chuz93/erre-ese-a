@@ -49,6 +49,40 @@ function label(ctx: CanvasRenderingContext2D, text: string, cx: number): void {
   ctx.fillText(text, cx, FLOOR_Y + 42);
 }
 
+function panel(
+  ctx: CanvasRenderingContext2D,
+  title: string,
+  chips: string[],
+  x: number,
+  y: number,
+  w: number,
+  colors: { bg: string; border: string; chipBg: string; chipInk: string; title: string },
+): void {
+  ctx.fillStyle = colors.bg;
+  roundRect(ctx, x, y, w, 92, 14);
+  ctx.fill();
+  ctx.strokeStyle = colors.border;
+  ctx.lineWidth = 3;
+  ctx.stroke();
+  ctx.font = `600 20px ${FONT}`;
+  ctx.fillStyle = colors.title;
+  ctx.textAlign = "left";
+  ctx.textBaseline = "alphabetic";
+  ctx.fillText(title, x + 18, y + 26);
+  ctx.font = `bold 34px ${FONT}`;
+  let cx = x + 18;
+  for (const chip of chips) {
+    const cw = ctx.measureText(chip).width + 28;
+    ctx.fillStyle = colors.chipBg;
+    roundRect(ctx, cx, y + 38, cw, 44, 10);
+    ctx.fill();
+    ctx.fillStyle = colors.chipInk;
+    ctx.textBaseline = "middle";
+    ctx.fillText(chip, cx + 14, y + 61);
+    cx += cw + 12;
+  }
+}
+
 const MOOD_ICON: Record<SceneState["imp"]["mood"], string> = {
   listening: "👂",
   cracking: "⚙️",
@@ -89,6 +123,18 @@ export function drawScene(ctx: CanvasRenderingContext2D, scene: SceneState, time
   ctx.lineTo(DEMON_X - 150, WIRE_Y);
   ctx.stroke();
   ctx.setLineDash([]);
+
+  // what everyone can see, and what only the Cyberdemon knows
+  if (scene.board && scene.board.length > 0) {
+    panel(ctx, "PUBLIC (everyone, including the Imp)", scene.board, 560, 16, 700, {
+      bg: "#0f2417", border: "#2f7a4f", chipBg: "#1c4d32", chipInk: "#9dffc4", title: "#6ee7a0",
+    });
+  }
+  if (scene.secret && scene.secret.length > 0) {
+    panel(ctx, "SECRET (Cyberdemon only)", scene.secret, 1290, 16, 610, {
+      bg: "#2a1010", border: "#8a2f2f", chipBg: "#5a1c1c", chipInk: "#ffb3b3", title: "#ff8a8a",
+    });
+  }
 
   // speech bubbles
   if (scene.marine.bubble) bubble(ctx, scene.marine.bubble, MARINE_X, FLOOR_Y - 360, "#f3e6d8", "#1a0c0c");

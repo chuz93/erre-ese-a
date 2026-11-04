@@ -12,6 +12,10 @@ export interface SceneState {
   imp: { bubble?: string; mood: "listening" | "cracking" | "winning" | "stuck" };
   /** Ciphertext travelling from the marine to the Cyberdemon. */
   wire?: { label: string };
+  /** Values everyone can see (the public board). */
+  board?: string[];
+  /** Values only the Cyberdemon knows. */
+  secret?: string[];
   size: "toy" | "real";
 }
 export interface Step {
@@ -63,8 +67,9 @@ export function buildSteps(engine: RsaEngine, demo: typeof DEMO = DEMO): Step[] 
       ],
       scene: {
         marine: {},
-        demon: { bubble: `p = ${p}, q = ${q}` },
+        demon: {},
         imp: { mood: "listening", bubble: "What did he pick?" },
+        secret: [`p = ${p}`, `q = ${q}`],
         size: "toy",
       },
     },
@@ -78,8 +83,10 @@ export function buildSteps(engine: RsaEngine, demo: typeof DEMO = DEMO): Step[] 
       ],
       scene: {
         marine: {},
-        demon: { bubble: `n = ${n}` },
+        demon: {},
         imp: { mood: "listening", bubble: `I see n = ${n}` },
+        secret: [`p = ${p}`, `q = ${q}`],
+        board: [`n = ${n}`],
         size: "toy",
       },
     },
@@ -102,7 +109,7 @@ export function buildSteps(engine: RsaEngine, demo: typeof DEMO = DEMO): Step[] 
       id: 5,
       title: "Build the public key",
       caption:
-        "φ counts the numbers below n that share no factor with it; (p − 1)(q − 1) only works because p and q are prime. e must share no factor with φ.",
+        "φ counts the numbers below n sharing no factor with n; (p − 1)(q − 1) only works because p and q are prime. Pick e with no factor in common with φ.",
       lines: [
         line([`φ = (${p} − 1)(${q} − 1) = `, "plain"], [`${phi}`, "secret"]),
         line([`e = ${e},  gcd(${e}, ${phi}) = ${engine.gcd(e, phi)}`, "plain"]),
@@ -110,8 +117,10 @@ export function buildSteps(engine: RsaEngine, demo: typeof DEMO = DEMO): Step[] 
       ],
       scene: {
         marine: {},
-        demon: { bubble: `public key (${e}, ${n})` },
+        demon: {},
         imp: { mood: "listening", bubble: `I know e = ${e} and n = ${n}` },
+        secret: [`p = ${p}`, `q = ${q}`, `φ = ${phi}`],
+        board: [`e = ${e}`, `n = ${n}`],
         size: "toy",
       },
     },
@@ -128,6 +137,8 @@ export function buildSteps(engine: RsaEngine, demo: typeof DEMO = DEMO): Step[] 
         demon: {},
         imp: { mood: "listening" },
         wire: { label: `${c}` },
+        secret: [`p = ${p}`, `q = ${q}`, `φ = ${phi}`],
+        board: [`e = ${e}`, `n = ${n}`],
         size: "toy",
       },
     },
@@ -142,8 +153,10 @@ export function buildSteps(engine: RsaEngine, demo: typeof DEMO = DEMO): Step[] 
       scene: {
         marine: {},
         demon: {},
-        imp: { mood: "stuck", bubble: `Real n? I can't factor it.` },
+        imp: { mood: "stuck", bubble: `n = ${n}, e = ${e}, c = ${c}. No φ, no d.` },
         wire: { label: `${c}` },
+        secret: [`p = ${p}`, `q = ${q}`, `φ = ${phi}`],
+        board: [`e = ${e}`, `n = ${n}`],
         size: "real",
       },
     },
@@ -159,6 +172,8 @@ export function buildSteps(engine: RsaEngine, demo: typeof DEMO = DEMO): Step[] 
         marine: {},
         demon: { bubble: `${back}` },
         imp: { mood: "stuck" },
+        secret: [`φ = ${phi}`, `d = ${d}`],
+        board: [`e = ${e}`, `n = ${n}`],
         size: "toy",
       },
     },
