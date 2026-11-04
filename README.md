@@ -50,11 +50,11 @@ See [docs/guion-presentacion.md](docs/guion-presentacion.md) (Spanish): what to 
 
 ## Rehearsal checklist
 
-- [ ] Full run-through with a timer: 8 to 10 minutes for all 9 steps.
+- [ ] Full run-through with a timer: 8 to 10 minutes for all 8 steps.
 - [ ] On the laptop's own screen, then on the classroom projector (or an external monitor) at 1280×720 and 1920×1080. Text readable from the back.
 - [ ] Wi-Fi off, using `npm run serve:backup`.
 - [ ] `F` fullscreen on and off mid-step; resize the window; the step must not change.
-- [ ] Press `→` on step 9 and `←` on step 1: nothing breaks.
+- [ ] Press `→` on step 8 and `←` on step 1: nothing breaks.
 - [ ] Hold `→`: only one step per press.
 
 ## License
