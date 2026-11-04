@@ -1,0 +1,21 @@
+[
+  { "fn": "modPow", "args": [4, 3, 33], "expect": 31 },
+  { "fn": "modPow", "args": [31, 7, 33], "expect": 4 },
+  { "fn": "modPow", "args": [5, 0, 1], "expect": 0 },
+  { "fn": "modInverse", "args": [3, 20], "expect": 7 },
+  { "fn": "modInverse", "args": [2, 20], "expect": null },
+  { "fn": "gcd", "args": [3, 20], "expect": 1 },
+  { "fn": "phi", "args": [3, 11], "expect": 20 },
+  { "fn": "phi", "args": [4, 11], "throws": true },
+  { "fn": "phi", "args": [3, 3], "throws": true },
+  { "fn": "smallestFactor", "args": [33], "expect": 3 },
+  { "fn": "smallestFactor", "args": [13], "expect": 13 },
+  { "fn": "isPrime", "args": [3], "expect": true },
+  { "fn": "isPrime", "args": [1], "expect": false },
+  { "fn": "isPrime", "args": [33], "expect": false },
+  { "fn": "powerCycle", "args": [4, 33], "expect": [1, 4, 16, 31, 25] },
+  { "fn": "encrypt", "args": [4, 3, 33], "expect": 31 },
+  { "fn": "decrypt", "args": [31, 7, 33], "expect": 4 },
+  { "fn": "encrypt", "args": [33, 3, 33], "throws": true },
+  { "fn": "decrypt", "args": [40, 7, 33], "throws": true }
+]
