@@ -64,7 +64,7 @@ export default function Page() {
         {error ? (
           <div className="loading">{error}</div>
         ) : !step || !sprites ? (
-          <div className="loading">Loading…</div>
+          <div className="loading">Cargando…</div>
         ) : (
           <>
             <header className="header">
@@ -82,7 +82,7 @@ export default function Page() {
             )}
             <ProgressBar index={index} total={steps.length} />
             <footer className="credit">
-              Sprites ripped by Falcon Delta. Doom is a trademark of id Software/Bethesda. &nbsp;·&nbsp; engine:{" "}
+              Sprites extraídos por Falcon Delta. Doom es una marca de id Software/Bethesda. &nbsp;·&nbsp; motor:{" "}
               {engine?.kind}
             </footer>
           </>

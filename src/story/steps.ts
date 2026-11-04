@@ -46,45 +46,44 @@ export function buildSteps(engine: RsaEngine, demo: typeof DEMO = DEMO): Step[] 
   return [
     {
       id: 1,
-      title: "The message",
-      caption: "The Marine wants to send the Cyberdemon a secret number. The Imp is listening on the wire.",
-      lines: [line(["Secret message  m = ", "plain"], [`${m}`, "result"])],
+      title: "El mensaje",
+      caption: "El Marine quiere enviarle un número secreto al Cyberdemon. El Imp escucha en el cable.",
+      lines: [line(["Mensaje secreto  m = ", "plain"], [`${m}`, "result"])],
       scene: {
         marine: { bubble: `${m}` },
         demon: {},
-        imp: { mood: "listening", bubble: "I hear everything…" },
+        imp: { mood: "listening", bubble: "Escucho todo…" },
         size: "toy",
       },
     },
     {
       id: 2,
-      title: "Two secret primes",
-      caption:
-        "Primes are the atoms of numbers: every number breaks into primes in exactly one way.",
+      title: "Dos primos secretos",
+      caption: "Los primos son los átomos de los números: todo número se descompone en primos de una única manera.",
       lines: [
         line(["p = ", "plain"], [`${p}`, "secret"], ["     q = ", "plain"], [`${q}`, "secret"]),
-        line([`${p} and ${q} are prime: nothing but 1 and themselves divides them`, "plain"]),
+        line([`${p} y ${q} son primos: solo el 1 y ellos mismos los dividen`, "plain"]),
       ],
       scene: {
         marine: {},
         demon: {},
-        imp: { mood: "listening", bubble: "What did he pick?" },
+        imp: { mood: "listening", bubble: "¿Cuáles habrá elegido?" },
         secret: [`p = ${p}`, `q = ${q}`],
         size: "toy",
       },
     },
     {
       id: 3,
-      title: "Multiply: the easy direction",
-      caption: "Multiplying two primes is easy. The product n goes public; p and q stay secret.",
+      title: "Multiplicar: la dirección fácil",
+      caption: "Multiplicar dos primos es fácil. El producto n se hace público; p y q siguen siendo secretos.",
       lines: [
         line(["n = p × q = ", "plain"], [`${p} × ${q} = ${n}`, "public"]),
-        line(["n = ", "plain"], [`${n}`, "public"], ["  is public.  p and q stay ", "plain"], ["secret", "secret"]),
+        line(["n = ", "plain"], [`${n}`, "public"], ["  es público.  p y q siguen siendo ", "plain"], ["secretos", "secret"]),
       ],
       scene: {
         marine: {},
         demon: {},
-        imp: { mood: "listening", bubble: `I see n = ${n}` },
+        imp: { mood: "listening", bubble: `Veo n = ${n}` },
         secret: [`p = ${p}`, `q = ${q}`],
         board: [`n = ${n}`],
         size: "toy",
@@ -92,33 +91,32 @@ export function buildSteps(engine: RsaEngine, demo: typeof DEMO = DEMO): Step[] 
     },
     {
       id: 4,
-      title: "The Imp tries to undo it",
-      caption: "Going backwards means finding the factors. For a toy number that is instant; for a real one it is hopeless.",
+      title: "El Imp intenta deshacerlo",
+      caption: "Ir hacia atrás es factorizar. Con un número de juguete es instantáneo; con uno real, imposible.",
       lines: [
         line([`Imp: ${n} ÷ ${small} = ${n / small}  →  `, "plain"], [`${small} × ${n / small} = ${n}`, "result"]),
-        line(["Toy keys are breakable. Real keys are hundreds of digits long.", "plain"]),
+        line(["Claves de juguete: se rompen. Las reales: cientos de dígitos.", "plain"]),
       ],
       scene: {
         marine: {},
         demon: {},
-        imp: { mood: "winning", bubble: `${n} = ${small} × ${n / small}. Easy.` },
+        imp: { mood: "winning", bubble: `${n} = ${small} × ${n / small}. Fácil.` },
         size: "toy",
       },
     },
     {
       id: 5,
-      title: "Build the public key",
-      caption:
-        "φ counts the numbers below n sharing no factor with n; (p − 1)(q − 1) works because p and q are prime.",
+      title: "Construir la clave pública",
+      caption: "φ cuenta los números menores que n sin factores comunes con n; (p − 1)(q − 1) funciona porque p y q son primos.",
       lines: [
         line([`φ = (${p} − 1)(${q} − 1) = `, "plain"], [`${phi}`, "secret"]),
-        line([`e = ${e},  gcd(${e}, ${phi}) = ${engine.gcd(e, phi)}`, "plain"]),
-        line(["Public key  (e, n) = ", "plain"], [`(${e}, ${n})`, "public"]),
+        line([`e = ${e},  mcd(${e}, ${phi}) = ${engine.gcd(e, phi)}`, "plain"]),
+        line(["Clave pública  (e, n) = ", "plain"], [`(${e}, ${n})`, "public"]),
       ],
       scene: {
         marine: {},
         demon: {},
-        imp: { mood: "listening", bubble: `I know e = ${e} and n = ${n}` },
+        imp: { mood: "listening", bubble: `Conozco e = ${e} y n = ${n}` },
         secret: [`p = ${p}`, `q = ${q}`, `φ = ${phi}`],
         board: [`e = ${e}`, `n = ${n}`],
         size: "toy",
@@ -126,8 +124,8 @@ export function buildSteps(engine: RsaEngine, demo: typeof DEMO = DEMO): Step[] 
     },
     {
       id: 6,
-      title: "Encrypt",
-      caption: "The Marine scrambles the message with the public key: raise it to the power e, keep the remainder mod n.",
+      title: "Cifrar",
+      caption: "El Marine mezcla el mensaje con la clave pública: lo eleva a e y se queda con el resto módulo n.",
       lines: [
         line(["c = m^e mod n", "plain"]),
         line([`c = ${m}^${e} mod ${n} = ${m ** e} mod ${n} = `, "plain"], [`${c}`, "result"]),
@@ -144,17 +142,17 @@ export function buildSteps(engine: RsaEngine, demo: typeof DEMO = DEMO): Step[] 
     },
     {
       id: 7,
-      title: "The Imp intercepts",
-      caption: "The Imp knows n, e and the ciphertext. To get d he needs φ, and φ needs p and q.",
+      title: "El Imp intercepta",
+      caption: "El Imp conoce n, e y el mensaje cifrado. Para hallar d necesita φ, y φ necesita p y q.",
       lines: [
-        line(["Imp sees:  n = ", "plain"], [`${n}`, "public"], [",  e = ", "plain"], [`${e}`, "public"], [",  c = ", "plain"], [`${c}`, "result"]),
-        line(["No φ, no d: φ needs p and q, and a real n can't be factored.", "plain"]),
-        line(["(With the toy n = 33 he would simply factor it, as in step 4.)", "plain"]),
+        line(["El Imp ve:  n = ", "plain"], [`${n}`, "public"], [",  e = ", "plain"], [`${e}`, "public"], [",  c = ", "plain"], [`${c}`, "result"]),
+        line(["Sin φ no hay d, y φ necesita p y q. Una n real no se factoriza.", "plain"]),
+        line([`(Con n = ${n} de juguete la factoriza, como en el paso 4.)`, "plain"]),
       ],
       scene: {
         marine: {},
         demon: {},
-        imp: { mood: "stuck", bubble: `n = ${n}, e = ${e}, c = ${c}. No φ, no d.` },
+        imp: { mood: "stuck", bubble: `n = ${n}, e = ${e}, c = ${c}. Sin φ, no hay d.` },
         wire: { label: `${c}` },
         secret: [`p = ${p}`, `q = ${q}`, `φ = ${phi}`],
         board: [`e = ${e}`, `n = ${n}`],
@@ -163,8 +161,8 @@ export function buildSteps(engine: RsaEngine, demo: typeof DEMO = DEMO): Step[] 
     },
     {
       id: 8,
-      title: "Decrypt with the private key",
-      caption: "The Cyberdemon knows φ, so he can find d: the number that undoes e.",
+      title: "Descifrar con la clave privada",
+      caption: "El Cyberdemon conoce φ, así que puede hallar d: el número que deshace a e.",
       lines: [
         line([`d = e⁻¹ mod φ:  ${e} × ${d} = ${e * d} = 1 mod ${phi}  →  d = `, "plain"], [`${d}`, "secret"]),
         line([`m = c^d mod n = ${c}^${d} mod ${n} = `, "plain"], [`${back}`, "result"]),
@@ -180,12 +178,12 @@ export function buildSteps(engine: RsaEngine, demo: typeof DEMO = DEMO): Step[] 
     },
     {
       id: 9,
-      title: "Why it works",
-      caption: "Encrypting then decrypting multiplies the exponents: e × d = 1 + k × φ, so the powers loop back to the message.",
+      title: "Por qué funciona",
+      caption: "Cifrar y descifrar multiplica los exponentes: e × d = 1 + k × φ, así que las potencias vuelven al mensaje.",
       lines: [
         line([`e × d = ${e} × ${d} = ${e * d} = 1 + ${k} × ${phi}`, "plain"]),
         line([`(m^e)^d = m^(1 + k·φ) = m × (m^φ)^k = m  (mod n)`, "plain"]),
-        line([`Powers of ${m} mod ${n} cycle: `, "plain"], [cycleText, "result"]),
+        line([`Las potencias de ${m} mod ${n} forman un ciclo: `, "plain"], [cycleText, "result"]),
       ],
       scene: {
         marine: {},

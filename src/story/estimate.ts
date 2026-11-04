@@ -7,12 +7,12 @@ const SECONDS_PER_YEAR = 31_557_600;
 export function estimateCrackTime(digits: number, triesPerSecond: number): { log10Years: number; label: string } {
   const log10Seconds = digits / 2 - Math.log10(triesPerSecond);
   const log10Years = log10Seconds - Math.log10(SECONDS_PER_YEAR);
-  if (log10Seconds < 0) return { log10Years, label: "less than a second" };
-  if (log10Years < 0) return { log10Years, label: "less than a year" };
+  if (log10Seconds < 0) return { log10Years, label: "menos de un segundo" };
+  if (log10Years < 0) return { log10Years, label: "menos de un año" };
   if (log10Years < 6) {
-    return { log10Years, label: `≈ ${Math.round(10 ** log10Years).toLocaleString("en-US")} years` };
+    return { log10Years, label: `≈ ${Math.round(10 ** log10Years).toLocaleString("es-ES")} años` };
   }
-  return { log10Years, label: `≈ 10^${Math.round(log10Years)} years` };
+  return { log10Years, label: `≈ 10^${Math.round(log10Years)} años` };
 }
 
 /** Digits shown by the step-4 dial `elapsedMs` after the step appears: hold at toy size, then grow to real size. */

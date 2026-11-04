@@ -1,11 +1,11 @@
 import type { ReactNode } from "react";
 import "./globals.css";
 
-export const metadata = { title: "RSA: the Marine, the Cyberdemon and the Imp" };
+export const metadata = { title: "RSA: el Marine, el Cyberdemon y el Imp" };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="es">
       <body>{children}</body>
     </html>
   );

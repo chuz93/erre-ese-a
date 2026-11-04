@@ -15,8 +15,8 @@ describe("wheelModel", () => {
   });
 
   test("captions narrate start, encrypt and decrypt with the real numbers", () => {
-    expect(model.captions[0]).toBe("Start: m = 4^1 = 4");
-    expect(model.captions[1]).toBe("Encrypt: (4^1)^3 = 4^3 = 31");
-    expect(model.captions[2]).toBe("Decrypt: (4^3)^7 = 4^21 = 4^(21 mod 5) = 4^1 = 4");
+    expect(model.captions[0]).toBe("Inicio: m = 4^1 = 4");
+    expect(model.captions[1]).toBe("Cifrar: (4^1)^3 = 4^3 = 31");
+    expect(model.captions[2]).toBe("Descifrar: (4^3)^7 = 4^21 = 4^(21 mod 5) = 4^1 = 4");
   });
 });

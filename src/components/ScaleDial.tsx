@@ -27,21 +27,21 @@ export function ScaleDial({ engine, n }: { engine: RsaEngine; n: number }) {
   return (
     <div className="equations">
       <div className="eq-line" style={{ animationDelay: "0ms" }}>
-        <span className="tone-secret">Toy keys are breakable: </span>
-        <span className="tone-plain">{`${n} ÷ ${factor} = ${n / factor}, so `}</span>
+        <span className="tone-secret">Las claves de juguete se rompen: </span>
+        <span className="tone-plain">{`${n} ÷ ${factor} = ${n / factor}, y `}</span>
         <span className="tone-result">{`${factor} × ${n / factor} = ${n}`}</span>
       </div>
       <div className="dial-row">
-        <span className={real ? "tone-secret" : "tone-public"}>{real ? "real n" : "toy n"}</span>
-        <span className="tone-plain">{`n has ${digits} digit${digits === 1 ? "" : "s"}`}</span>
+        <span className={real ? "tone-secret" : "tone-public"}>{real ? "n real" : "n de juguete"}</span>
+        <span className="tone-plain">{`n tiene ${digits} dígito${digits === 1 ? "" : "s"}`}</span>
         <div className="dial-track">
           <div className="dial-fill" style={{ width: `${(digits / REAL_DIGITS) * 100}%` }} />
         </div>
       </div>
       <div className="eq-line" style={{ animationDelay: "0ms" }}>
-        <span className="tone-plain">Imp needs </span>
+        <span className="tone-plain">El Imp necesita </span>
         <span className={real ? "tone-secret" : "tone-public"}>{estimate.label}</span>
-        <span className="dial-note"> (estimate: 1 billion tries/second)</span>
+        <span className="dial-note"> (estimación: mil millones de intentos/s)</span>
       </div>
     </div>
   );

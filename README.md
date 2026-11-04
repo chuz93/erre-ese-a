@@ -1,6 +1,6 @@
 # RSA demo: the Marine, the Cyberdemon and the Imp
 
-A keyboard-driven, 9-step animated explanation of RSA (key setup, encryption, decryption, why it works) with small numbers: **p = 3, q = 11, n = 33, φ = 20, e = 3, d = 7, m = 4, c = 31**.
+A keyboard-driven, 9-step animated explanation (on-screen text in Spanish) of RSA (key setup, encryption, decryption, why it works) with small numbers: **p = 3, q = 11, n = 33, φ = 20, e = 3, d = 7, m = 4, c = 31**.
 
 The RSA math runs as Rust compiled to WebAssembly (`rsa-engine/`), with a plain-JS copy of the same math as an automatic fallback. The page footer shows which one is running (`engine: wasm` or `engine: js`).
 

@@ -126,12 +126,12 @@ export function drawScene(ctx: CanvasRenderingContext2D, scene: SceneState, time
 
   // what everyone can see, and what only the Cyberdemon knows
   if (scene.board && scene.board.length > 0) {
-    panel(ctx, "PUBLIC (everyone, including the Imp)", scene.board, 560, 16, 700, {
+    panel(ctx, "PÚBLICO (todos, incluido el Imp)", scene.board, 560, 16, 700, {
       bg: "#0f2417", border: "#2f7a4f", chipBg: "#1c4d32", chipInk: "#9dffc4", title: "#6ee7a0",
     });
   }
   if (scene.secret && scene.secret.length > 0) {
-    panel(ctx, "SECRET (Cyberdemon only)", scene.secret, 1290, 16, 610, {
+    panel(ctx, "SECRETO (solo el Cyberdemon)", scene.secret, 1290, 16, 610, {
       bg: "#2a1010", border: "#8a2f2f", chipBg: "#5a1c1c", chipInk: "#ffb3b3", title: "#ff8a8a",
     });
   }
@@ -166,7 +166,7 @@ export function drawScene(ctx: CanvasRenderingContext2D, scene: SceneState, time
   // toy / real size badge
   const real = scene.size === "real";
   ctx.font = `bold 30px ${FONT}`;
-  const badge = real ? "REAL SIZE" : "TOY SIZE";
+  const badge = real ? "TAMAÑO REAL" : "TAMAÑO JUGUETE";
   const bw = ctx.measureText(badge).width + 36;
   ctx.fillStyle = real ? "#7a1f1f" : "#2b4a2b";
   roundRect(ctx, 24, 20, bw, 52, 12);

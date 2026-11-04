@@ -7,10 +7,10 @@ export function ProgressBar({ index, total }: { index: number; total: number }) 
         ))}
       </div>
       <span className="count">
-        Step {index + 1} / {total}
+        Paso {index + 1} / {total}
       </span>
       <span className="keys">
-        <kbd>←</kbd> <kbd>→</kbd> step &nbsp; <kbd>F</kbd> fullscreen
+        <kbd>←</kbd> <kbd>→</kbd> paso &nbsp; <kbd>F</kbd> pantalla completa
       </span>
     </div>
   );

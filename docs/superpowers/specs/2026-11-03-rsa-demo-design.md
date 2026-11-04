@@ -54,7 +54,7 @@ The course is about intrusion, so the framing is the **attacker's view**. A mari
   - A plain-JS implementation of the same math as a fallback, so the demo cannot die from a WASM load failure.
 - **Machine:** the owner's Windows 11 laptop currently has no Node.js, npm, Rust or wasm toolchain. The builder will need to install these (via winget or similar), with the owner's go-ahead at that point.
 - **Offline safety:** the presenter may have no internet or a restricted network. The built site should also be runnable locally (a production build or a static folder) as a backup.
-- **Language:** English (my call; the owner writes in English).
+- **Language (updated 2026-11-03 by the owner):** all on-screen text is Spanish, because the class is taught in Spanish. Code, comments and the README stay in English.
 
 ## The story: 9 steps
 

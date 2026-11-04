@@ -84,7 +84,16 @@ describe("buildSteps", () => {
   });
 
   test("step 7 says the Imp would win against the toy n = 33", () => {
-    expect(text(steps[6])).toContain("toy n = 33");
-    expect(text(steps[6])).toContain("factor");
+    expect(text(steps[6])).toContain("n = 33 de juguete");
+    expect(text(steps[6])).toContain("factoriza");
+  });
+
+  test("every equation line fits one row of the strip (at most 65 characters)", () => {
+    for (const s of steps) {
+      s.lines.forEach((l, i) => {
+        const len = l.parts.map((p) => p.text).join("").length;
+        expect(len, `step ${s.id} line ${i + 1}`).toBeLessThanOrEqual(65);
+      });
+    }
   });
 });

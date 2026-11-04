@@ -9,15 +9,15 @@ describe("estimateCrackTime", () => {
   test("617 digits reads as a power of ten in years", () => {
     const { label } = estimateCrackTime(617, 1e9);
     expect(label.startsWith("≈ 10^")).toBe(true);
-    expect(label.endsWith(" years")).toBe(true);
+    expect(label.endsWith(" años")).toBe(true);
   });
 
   test("2 digits reads less than a second", () => {
-    expect(estimateCrackTime(2, 1e9).label).toBe("less than a second");
+    expect(estimateCrackTime(2, 1e9).label).toBe("menos de un segundo");
   });
 
   test("mid-range sizes read in plain years", () => {
-    expect(estimateCrackTime(40, 1e9).label).toMatch(/^≈ [\d,.]+ years$/);
+    expect(estimateCrackTime(40, 1e9).label).toMatch(/^≈ [\d,.]+ años$/);
   });
 });
 

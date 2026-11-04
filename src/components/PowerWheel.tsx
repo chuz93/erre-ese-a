@@ -27,7 +27,7 @@ export function PowerWheel({ model }: { model: WheelModel }) {
 
   return (
     <div className="wheel-panel">
-      <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className="wheel-svg" role="img" aria-label="Powers of the message mod n">
+      <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className="wheel-svg" role="img" aria-label="Potencias del mensaje módulo n">
         <circle cx={CENTER} cy={CENTER} r={RADIUS} fill="none" stroke="#3a2420" strokeWidth={6} strokeDasharray="10 12" />
         {model.values.map((value, i) => {
           const { x, y } = nodePos(i, count);
@@ -53,10 +53,10 @@ export function PowerWheel({ model }: { model: WheelModel }) {
           style={{ transition: "cx 900ms ease-in-out, cy 900ms ease-in-out" }}
         />
         <text x={CENTER} y={CENTER - 4} textAnchor="middle" fontSize={30} fill="#d8c6b2">
-          cycle of
+          ciclo de
         </text>
         <text x={CENTER} y={CENTER + 36} textAnchor="middle" fontSize={34} fontWeight={700} fill="#ffd84a">
-          {`${count} values`}
+          {`${count} valores`}
         </text>
       </svg>
       <div className="wheel-captions">
