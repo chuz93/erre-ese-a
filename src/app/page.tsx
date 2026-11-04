@@ -3,12 +3,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { EquationStrip } from "../components/EquationStrip";
 import { ProgressBar } from "../components/ProgressBar";
+import { ScaleDial } from "../components/ScaleDial";
 import { Stage } from "../components/Stage";
 import { loadEngine, type RsaEngine } from "../engine";
 import { fitScale, REF_H, REF_W } from "../render/layout";
 import { loadSprites, type SpriteSet } from "../render/sprites";
 import { isNavKey, nextIndex } from "../story/navigation";
-import { buildSteps } from "../story/steps";
+import { buildSteps, DEMO } from "../story/steps";
 
 export default function Page() {
   const [engine, setEngine] = useState<RsaEngine | null>(null);
@@ -68,7 +69,11 @@ export default function Page() {
               <p>{step.caption}</p>
             </header>
             <Stage scene={step.scene} sprites={sprites} />
-            <EquationStrip lines={step.lines} stepId={step.id} />
+            {step.id === 4 && engine ? (
+              <ScaleDial key={step.id} engine={engine} n={DEMO.p * DEMO.q} />
+            ) : (
+              <EquationStrip lines={step.lines} stepId={step.id} />
+            )}
             <ProgressBar index={index} total={steps.length} />
             <footer className="credit">
               Sprites ripped by Falcon Delta. Doom is a trademark of id Software/Bethesda. &nbsp;·&nbsp; engine:{" "}
