@@ -1,4 +1,5 @@
 import type { SceneState } from "../story/steps";
+import { finaleAt } from "../story/finale";
 import { drawSprite, type SpriteSet } from "./sprites";
 
 export const STAGE_W = 1920;
@@ -10,6 +11,13 @@ const MARINE_X = 300;
 const DEMON_X = 1620;
 const IMP_X = 960;
 const FONT = "'Segoe UI', system-ui, sans-serif";
+
+// Screen pixels per sprite pixel, so frames of different sizes (aiming, falling) keep one scale.
+const MARINE_SCALE = 340 / 56;
+const IMP_SCALE = 300 / 57;
+// The Marine's firing frames face left; the Imp's death frames are drawn the same way as the live Imp.
+const FIRING_SHIFT_X = 30;
+const DEATH_FLIP = true;
 
 function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number): void {
   ctx.beginPath();
@@ -102,7 +110,13 @@ const MOOD_ICON: Record<SceneState["imp"]["mood"], string> = {
   stuck: "❓",
 };
 
-export function drawScene(ctx: CanvasRenderingContext2D, scene: SceneState, timeMs: number, sprites: SpriteSet): void {
+export function drawScene(
+  ctx: CanvasRenderingContext2D,
+  scene: SceneState,
+  timeMs: number,
+  sprites: SpriteSet,
+  sceneTimeMs = 0,
+): void {
   ctx.clearRect(0, 0, STAGE_W, STAGE_H);
 
   // backdrop: the Doom background, scaled to cover the stage, darkened so text and sprites stay readable
@@ -120,9 +134,23 @@ export function drawScene(ctx: CanvasRenderingContext2D, scene: SceneState, time
 
   // characters (gentle bob; the Imp fidgets faster)
   const bob = (speed: number, amp: number) => Math.sin(timeMs / speed) * amp;
-  drawSprite(ctx, sprites.marine, MARINE_X, FLOOR_Y + bob(700, 4), 340);
+  const fin = scene.finale ? finaleAt(sceneTimeMs, sprites.impDeath.length) : undefined;
+  const impFalling = fin !== undefined && fin.imp !== "alive";
+
+  if (fin && fin.marine !== "idle") {
+    const img = fin.marine === "fire" ? sprites.marineFire : sprites.marineAim;
+    drawSprite(ctx, img, MARINE_X + FIRING_SHIFT_X, FLOOR_Y, img.height * MARINE_SCALE, true);
+  } else {
+    drawSprite(ctx, sprites.marine, MARINE_X, FLOOR_Y + bob(700, 4), 340);
+  }
   drawSprite(ctx, sprites.demon, DEMON_X, FLOOR_Y + bob(900, 3), 400);
-  drawSprite(ctx, sprites.imp, IMP_X, FLOOR_Y + bob(350, 5), 300, true);
+  if (fin && impFalling) {
+    const img = sprites.impDeath[fin.deathIndex];
+    drawSprite(ctx, img, IMP_X, FLOOR_Y, img.height * IMP_SCALE, DEATH_FLIP);
+  } else {
+    drawSprite(ctx, sprites.imp, IMP_X, FLOOR_Y + bob(350, 5), 300, true);
+  }
+
 
   label(ctx, "Marine", MARINE_X);
   label(ctx, "Imp", IMP_X);
@@ -158,14 +186,15 @@ export function drawScene(ctx: CanvasRenderingContext2D, scene: SceneState, time
 
   // speech bubbles
   if (scene.marine.bubble) bubble(ctx, scene.marine.bubble, MARINE_X, FLOOR_Y - 360, "#f3e6d8", "#1a0c0c");
-  if (scene.demon.bubble) bubble(ctx, scene.demon.bubble, DEMON_X, FLOOR_Y - 420, "#f3e6d8", "#1a0c0c");
-  if (scene.imp.bubble) bubble(ctx, scene.imp.bubble, IMP_X, FLOOR_Y - 320, "#3b2a1a", "#ffd9a0");
+  if (scene.demon.bubble) bubble(ctx, scene.demon.bubble, DEMON_X + 130, FLOOR_Y - 420, "#f3e6d8", "#1a0c0c");
+  if (scene.imp.bubble && !impFalling) bubble(ctx, scene.imp.bubble, IMP_X, FLOOR_Y - 320, "#3b2a1a", "#ffd9a0");
 
   // imp mood icon
   ctx.font = "56px 'Segoe UI Emoji', sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.fillText(MOOD_ICON[scene.imp.mood], IMP_X + 130, FLOOR_Y - 270);
+  if (fin?.imp === "dead") ctx.fillText("💀", IMP_X, FLOOR_Y - 150);
+  else if (!impFalling) ctx.fillText(MOOD_ICON[scene.imp.mood], IMP_X + 130, FLOOR_Y - 270);
 
   // toy / real size badge
   const real = scene.size === "real";

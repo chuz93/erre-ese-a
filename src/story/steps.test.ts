@@ -6,9 +6,9 @@ const steps = buildSteps(createJsEngine());
 const text = (s: Step) => s.lines.map((l) => l.parts.map((p) => p.text).join("")).join("\n");
 
 describe("buildSteps", () => {
-  test("builds exactly 8 steps", () => {
-    expect(steps).toHaveLength(8);
-    expect(steps.map((s) => s.id)).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
+  test("builds exactly 9 steps", () => {
+    expect(steps).toHaveLength(9);
+    expect(steps.map((s) => s.id)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
   });
 
   test("step 2 explains what a prime is in plain words", () => {
@@ -41,7 +41,7 @@ describe("buildSteps", () => {
 
   test("step 8 asks for the number wheel", () => {
     expect(steps[7].visual).toBe("wheel");
-    expect(steps.slice(0, 7).every((s) => s.visual === undefined)).toBe(true);
+    expect(steps.filter((s) => s.id !== 8).every((s) => s.visual === undefined)).toBe(true);
   });
 
   test("steps 1 to 4 are toy size", () => {
@@ -103,6 +103,21 @@ describe("buildSteps", () => {
 
   test("every Marine bubble is short enough to stay left of the public board (at most 24 characters)", () => {
     for (const s of steps) expect((s.scene.marine.bubble ?? "").length, `step ${s.id}`).toBeLessThanOrEqual(24);
+  });
+
+  test("step 9 is the finale: the Marine shoots the Imp, who never decrypted the message", () => {
+    const s = steps[8];
+    expect(s.scene.finale).toBe(true);
+    expect(s.title.toLowerCase()).toContain("imp");
+    expect(text(s)).toContain("no tiene d");
+    expect(text(s)).toContain("4 llegó seguro");
+    expect(s.scene.demon.bubble).toBe("4");
+    expect(steps.slice(0, 8).every((x) => x.scene.finale === undefined)).toBe(true);
+  });
+
+  test("step 9 keeps d secret and the public key on the board", () => {
+    expect(steps[8].scene.secret).toContain("d = 7");
+    expect(steps[8].scene.board).toEqual(["e = 3", "n = 33"]);
   });
 
   test("every caption fits on one line (at most 125 characters)", () => {

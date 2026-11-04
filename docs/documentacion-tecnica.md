@@ -3,7 +3,7 @@
 How the project was developed, how it works, how Rust, WebAssembly and Node.js fit together, and what every file does.
 
 - **Live:** https://rsa.elchuz.com/ (also https://erresa.vercel.app/)
-- **What it is:** a keyboard-driven, 8-step animated explanation of RSA, with on-screen text in Spanish, built for a 10-minute class demo in an Intrusion Detection course. Three Doom characters play the roles: the **Marine** (sender), the **Cyberdemon** (receiver) and the **Imp** (the intruder listening on the wire).
+- **What it is:** a keyboard-driven, 9-step animated explanation of RSA, with on-screen text in Spanish, built for a 10-minute class demo in an Intrusion Detection course. Three Doom characters play the roles: the **Marine** (sender), the **Cyberdemon** (receiver) and the **Imp** (the intruder listening on the wire).
 - **Presenter's script (Spanish):** [guion-presentacion.md](guion-presentacion.md). This document is about the software; the script is about what to say.
 
 ## Contents
@@ -44,7 +44,7 @@ The demo uses one fixed example with tiny numbers, so every step can be checked 
 The **public key** is `(e, n) = (3, 33)`. The **private key** is `d = 7`.
 Decrypting gives `31⁷ mod 33 = 4`, the original message.
 
-### The eight steps
+### The nine steps
 
 | # | Title (on screen, in Spanish) | What it shows |
 | --- | --- | --- |
@@ -56,6 +56,7 @@ Decrypting gives `31⁷ mod 33 = 4`, the original message.
 | 6 | El Imp intercepta | The Imp sees `n`, `e`, `c` but cannot get `d` (real size). |
 | 7 | Descifrar con la clave privada | `d = 7`; `31⁷ mod 33 = 4`. |
 | 8 | Por qué funciona | A wheel of the 5 values `1, 4, 16, 31, 25`; `e × d = 1 + 1 × φ`. |
+| 9 | El Imp nunca lo descifró | Finale: the Marine shoots and the Imp dies, because he never had `d`. |
 
 The presenter moves with `→` / `←` (or `PageDown` / `PageUp`); `Home` and `End` jump to the ends, `F` toggles fullscreen, and a click on the left third of the screen goes back while a click elsewhere goes forward. Nothing advances by itself between steps.
 
@@ -113,7 +114,7 @@ Smaller findings were deferred (see [Known limitations](#11-known-limitations)).
 
 ### 2.5 Iteration requested by the owner
 
-After the first version, the owner asked for: all text in Spanish (the class is taught in Spanish); the supplied Doom sprite sheets as graphics (with credit); a Doom background; a clearer step 2 wording; removing the old step 4 ("the Imp tries to undo it", with a scale-up dial) because it could confuse; a speech bubble and a key packet so it is clear the Marine receives the public key; and a simpler last-step wheel. A Spanish presentation script was added, and the site was deployed on Vercel under `rsa.elchuz.com`.
+After the first version, the owner asked for: all text in Spanish (the class is taught in Spanish); the supplied Doom sprite sheets as graphics (with credit); a Doom background; a clearer step 2 wording; removing the old step 4 ("the Imp tries to undo it", with a scale-up dial) because it could confuse; a speech bubble and a key packet so it is clear the Marine receives the public key; and a simpler last-step wheel. A final slide was added in which the Marine shoots the Imp and the Imp plays his death animation, to close the story ("the Imp never managed to decrypt the message"). A Spanish presentation script was added, and the site was deployed on Vercel under `rsa.elchuz.com`.
 
 ### 2.6 Commit history
 
@@ -133,6 +134,7 @@ After the first version, the owner asked for: all text in Spanish (the class is 
 | `14d76b3` | Step 4 removed, clearer step 2, Doom background |
 | `bf57edd` | Marine receives the public key (bubble and packet) |
 | `b1f2bf6` | Simpler wheel; Spanish presentation script |
+| (later commits) | Technical documentation, MIT license, repository link in the footer, `.gitignore`, and the final slide in which the Marine shoots the Imp |
 
 ---
 
@@ -150,7 +152,7 @@ After the first version, the owner asked for: all text in Spanish (the class is 
  │  Drawing layer       │                 render/ (scene.ts, sprites.ts, │
  │  (Canvas 2D)         │                         layout.ts)           │
  │                      ▼                                              │
- │  Story layer     story/ (steps.ts, navigation.ts, wheel.ts)         │
+ │  Story layer     story/ (steps.ts, navigation.ts, wheel.ts, finale.ts)         │
  │  (pure TypeScript, no browser APIs, fully unit-tested)              │
  │                      │  asks the engine for every number            │
  │                      ▼                                              │
@@ -173,17 +175,17 @@ After the first version, the owner asked for: all text in Spanish (the class is 
  DEMO = { p: 3, q: 11, e: 3, m: 4 }
         │
         ▼
- buildSteps(engine, DEMO)  ──►  Step[8]   each Step = title + caption
+ buildSteps(engine, DEMO)  ──►  Step[9]   each Step = title + caption
         │                                  + equation lines + SceneState
         │                                  (+ optional "wheel" visual)
         ▼
- page.tsx keeps `index` (current step); key press → nextIndex(index, key, 8)
+ page.tsx keeps `index` (current step); key press → nextIndex(index, key, 9)
         │
         ├─► header: title and caption
         ├─► Stage (canvas): drawScene(ctx, step.scene, time, sprites) every frame
         ├─► EquationStrip: step.lines (HTML, colour-coded by tone)
         ├─► PowerWheel (only when step.visual === "wheel")
-        └─► ProgressBar: dots and "Paso i / 8"
+        └─► ProgressBar: dots and "Paso i / 9"
 ```
 
 ### 3.3 Technology
@@ -361,10 +363,12 @@ erresa/
 │   └── story/                   what the demo says (pure logic)
 │       ├── steps.ts
 │       ├── navigation.ts
-│       └── wheel.ts
+│       ├── wheel.ts
+│       └── finale.ts
 ├── public/                      served as-is at the site root
 │   ├── engine.wasm
-│   └── sprites/  marine.png, imp.png, cyberdemon.png, background.png
+│   └── sprites/  marine.png, imp.png, cyberdemon.png, background.png,
+│                 marine-aim.png, marine-fire.png, imp-death-0..4.png
 ├── scripts/                     Node helper scripts
 │   ├── copy-wasm.mjs
 │   ├── extract-sprites.mjs
@@ -434,15 +438,21 @@ This folder is pure TypeScript with no browser APIs, so it is fully unit-testabl
   | `board` | values on the PÚBLICO panel |
   | `secret` | values on the SECRETO panel |
   | `size` | `"toy"` or `"real"` (the corner badge) |
+  | `finale` | `true` on the last slide: the Marine shoots and the Imp dies (see `finale.ts`) |
 
 - `Step` is `{ id, title, caption, lines, scene, visual? }`; `visual: "wheel"` asks the page to draw the number wheel.
-- `buildSteps(engine, demo = DEMO): Step[]` returns the 8 steps. It first asks the engine for `phi`, `d = modInverse(e, φ)`, `c = encrypt(m, e, n)`, `back = decrypt(c, d, n)`, `k = (e·d − 1)/φ` and the power cycle, then assembles the steps from those values. Throws `RangeError` if `e` has no inverse.
+- `buildSteps(engine, demo = DEMO): Step[]` returns the 9 steps. It first asks the engine for `phi`, `d = modInverse(e, φ)`, `c = encrypt(m, e, n)`, `back = decrypt(c, d, n)`, `k = (e·d − 1)/φ` and the power cycle, then assembles the steps from those values. Throws `RangeError` if `e` has no inverse.
 
 **`navigation.ts`**
 
 - `nextIndex(current, key, total)`: `ArrowRight`/`PageDown` +1, `ArrowLeft`/`PageUp` −1, `Home` → 0, `End` → last; always clamped to `[0, total − 1]` and never negative, even with `total = 0`; any other key leaves the index unchanged.
 - `isNavKey(key)`: true for exactly those six keys (the page uses it to call `preventDefault`).
 - `tapKey(clientX, viewWidth)`: left third → `"ArrowLeft"`, anywhere else → `"ArrowRight"`.
+
+**`finale.ts`**
+
+- `FINALE`: the timeline of the final slide, in milliseconds since it appeared: the Marine starts shooting at 900, the Imp starts falling at 1,500 (240 ms per death frame), the Marine stops at 2,700.
+- `finaleAt(elapsedMs, deathFrames): FinaleFrame` returns what to draw at that moment: `marine` (`idle`, `aim` or `fire`; `aim` and `fire` alternate every 120 ms while shooting), `imp` (`alive`, `dying` or `dead`) and `deathIndex` (which death frame; it never goes backwards and stops on the last one). It is a pure function, so the whole animation is unit-tested without a browser.
 
 **`wheel.ts`**
 
@@ -452,7 +462,7 @@ This folder is pure TypeScript with no browser APIs, so it is fully unit-testabl
 
 **`layout.ts`**: `fitScale(viewW, viewH, refW = 1920, refH = 1080)` returns `{ scale, offsetX, offsetY }` that fits a 1920×1080 design box inside any window, centred, with letterboxing. A zero-size window gives scale 0 (no `NaN`). Constants `REF_W`, `REF_H`.
 
-**`sprites.ts`**: `loadSprites()` loads the four images (`marine`, `demon`, `imp`, `background`) from `sprites/*.png` and resolves to a `SpriteSet`. `drawSprite(ctx, img, cx, bottomY, height, flip?)` draws a character with its feet at a point, scaled to a height, with image smoothing off so the pixel art stays sharp.
+**`sprites.ts`**: `loadSprites()` loads the images from `sprites/*.png` (`marine`, `demon`, `imp`, `background`, plus `marineAim`, `marineFire` and the five `impDeath` frames used by the finale) and resolves to a `SpriteSet`. `drawSprite(ctx, img, cx, bottomY, height, flip?)` draws a character with its feet at a point, scaled to a height, with image smoothing off so the pixel art stays sharp.
 
 **`scene.ts`**: `drawScene(ctx, scene, timeMs, sprites)` paints one complete frame of the stage (1920×560 logical pixels):
 
@@ -462,6 +472,7 @@ This folder is pure TypeScript with no browser APIs, so it is fully unit-testabl
 4. The PÚBLICO and SECRETO panels (when the scene has `board` / `secret`).
 5. Moving packets along the wire: the ciphertext (`🔒 31`) left to right, the public key (`🔑 (3, 33)`) right to left. Position is `time % 3000 ms`, so they loop.
 6. Speech bubbles (drawn after the packets so a packet never hides a bubble), the Imp's mood emoji and the TAMAÑO JUGUETE / TAMAÑO REAL badge.
+7. On the final slide (`scene.finale`), the Marine and the Imp are drawn from `finaleAt(sceneTimeMs, …)`: the Marine switches to his aiming/firing frames (drawn flipped so he faces the Imp) and the Imp plays his death frames and ends with a skull above the body; the Imp's speech bubble disappears once he starts to fall.
 
 It has no state of its own: the same scene and time always produce the same picture. Helper functions `roundRect`, `bubble`, `wireChip`, `label` and `panel` do the repeated drawing.
 
@@ -469,9 +480,9 @@ It has no state of its own: the same scene and time always produce the same pict
 
 | Component | Responsibility |
 | --- | --- |
-| **`Stage.tsx`** | Client component hosting a `<canvas width=1920 height=560>`. A `requestAnimationFrame` loop calls `drawScene` every frame, reading the current scene from a ref so that changing step does not restart the loop. Cancels the loop on unmount. |
+| **`Stage.tsx`** | Client component hosting a `<canvas width=1920 height=560>`. A `requestAnimationFrame` loop calls `drawScene` every frame, reading the current scene from a ref so that changing step does not restart the loop. Also remembers when the current slide appeared and passes the elapsed time to `drawScene`, so one-shot animations (the finale) replay every time the slide is entered. Cancels the loop on unmount. |
 | **`EquationStrip.tsx`** | Renders a step's `lines` as HTML, one `<span>` per part with a class from its `tone` (green public, red secret, yellow result). Keyed by step id so lines re-fade-in on every step; each line has a staggered `animation-delay`. |
-| **`ProgressBar.tsx`** | One dot per step (done / current / pending), "Paso i / 8" and the key hint. |
+| **`ProgressBar.tsx`** | One dot per step (done / current / pending), "Paso i / 9" and the key hint. |
 | **`PowerWheel.tsx`** | SVG wheel: the cycle values placed on a circle, a yellow marker ring that moves between `path` positions on timers (at 0, 1.6 s and 3.8 s, with a CSS transition on `cx`/`cy`), and the three captions highlighted in turn. Clears its timers on unmount. |
 
 ### 6.5 `src/app/`: the page
@@ -494,7 +505,7 @@ It has no state of its own: the same scene and time always produce the same pict
 | --- | --- |
 | `copy-wasm.mjs` | Copies the Rust build output to `public/engine.wasm`. |
 | `sprite-lib.mjs` | Helpers for sprite sheets: `loadSheet` (reads a PNG; the pixel at (0,0) is the background "key" colour), `findFrames` (finds each sprite as a connected blob of non-key pixels), `cropTransparent` (cuts a frame and makes the key colour transparent). |
-| `extract-sprites.mjs` | Uses the helpers to cut one front-facing frame per character into `public/sprites/*.png`, plus one 560×200 panel of the widescreen sheet as `background.png`. Run once; the results are committed. |
+| `extract-sprites.mjs` | Uses the helpers to cut one front-facing frame per character into `public/sprites/*.png`, the Marine's aiming and firing frames, the Imp's five death frames, plus one 560×200 panel of the widescreen sheet as `background.png`. Run once; the results are committed. |
 | `serve-out.mjs` | Tiny static server for `out/` with correct MIME types (including `application/wasm`); `PORT` environment variable; `--no-wasm` makes `engine.wasm` return 404 to rehearse the fallback. |
 
 ---
@@ -524,7 +535,7 @@ It has no state of its own: the same scene and time always produce the same pict
    └─ page.tsx keydown handler
         ├─ ignore if auto-repeat
         ├─ preventDefault
-        └─ setIndex(nextIndex(index, "ArrowRight", 8))
+        └─ setIndex(nextIndex(index, "ArrowRight", 9))
               └─ React re-renders with steps[index]:
                     • header text changes
                     • Stage receives the new scene → next animation frame draws it
@@ -549,15 +560,16 @@ If the Rust code and the on-screen text ever disagreed, the tests (section 8) wo
 
 ## 8. Testing
 
-Run with `npm test` (Vitest, under Node). There are **46 tests in 7 files**, all passing.
+Run with `npm test` (Vitest, under Node). There are **57 tests in 8 files**, all passing.
 
 | File | Tests | What it pins |
 | --- | --- | --- |
 | `engine/js-engine.test.ts` | 2 | the JS engine satisfies every shared vector; its `kind` is `"js"` |
 | `engine/wasm-engine.test.ts` | 2 | the **committed `engine.wasm`** satisfies every shared vector; `kind` is `"wasm"` |
 | `engine/load-engine.test.ts` | 3 | the fallback: WASM result when it loads; JS when it rejects; JS when it never answers within 3 s (fake timers) |
-| `story/steps.test.ts` | 23 | step count (8); the exact equations and numbers of each step; scene state per step (bubbles, packets, panels, toy/real size); every caption ≤ 125 characters and every equation line ≤ 65 so nothing wraps or is hidden |
+| `story/steps.test.ts` | 25 | step count (9); the exact equations and numbers of each step; scene state per step (bubbles, packets, panels, toy/real size); every caption ≤ 125 characters and every equation line ≤ 65 so nothing wraps or is hidden |
 | `story/navigation.test.ts` | 8 | forward/back, `PageDown`/`PageUp`, clamping at both ends, never a negative index, `Home`/`End`, unknown keys, `isNavKey`, `tapKey` |
+| `story/finale.test.ts` | 9 | the finale's timeline: the Marine fires before the Imp falls, aim/fire alternate, the Imp ends dead on his last frame and never goes backwards, the Marine stops shooting |
 | `story/wheel.test.ts` | 4 | the cycle `[1, 4, 16, 31, 25]`, the path `[1, 3, 1]`, the captions, and no exponent chains |
 | `render/layout.test.ts` | 4 | `fitScale` at 1920×1080, 1280×720, 1024×768 (letterboxed) and 0×0 |
 

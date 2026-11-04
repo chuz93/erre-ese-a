@@ -40,7 +40,7 @@ Cada paso tiene tres partes:
 
 ---
 
-## Paso 1: "El mensaje" (0:45)
+## Paso 1: "El mensaje" (0:40)
 
 **En pantalla:** el Marine con la burbuja "4"; el Imp dice "Escucho todo…".
 
@@ -49,7 +49,7 @@ Cada paso tiene tres partes:
 
 **Para que lo entiendas tú:** RSA es *asimétrico*: hay una clave para cifrar que puede ser pública y otra distinta para descifrar que se queda secreta. Por eso no hace falta que se pongan de acuerdo antes.
 
-## Paso 2: "Dos primos secretos" (1:15)
+## Paso 2: "Dos primos secretos" (1:10)
 
 **En pantalla:** el Cyberdemon con el panel SECRETO: p = 3, q = 11. Debajo: "3 y 11 son primos: solo el 1 y ellos mismos los dividen".
 
@@ -117,7 +117,16 @@ Cada paso tiene tres partes:
 - Como e × d = 1 + k × φ (aquí k = 1): (m^e)^d = m^(1 + kφ) = m × (m^φ)^k ≡ m × 1 = m.
 - **Intuición para el público:** el ciclo tiene 5 posiciones. Cifrar avanza 2 (de la posición 1 a la 3) y descifrar avanza 3 (de la 3 a la 1, pasando por el inicio): 2 + 3 = 5, una vuelta completa. Esta cuenta es de *este* ejemplo; no es una regla general, úsala solo como imagen.
 
-## Cierre (0:30)
+## Paso 9: "El Imp nunca lo descifró" (0:40)
+
+**En pantalla:** el Imp dice "No logré descifrarlo…"; el Marine dispara y el Imp cae muerto (sale una calavera 💀). Abajo: "El Imp tiene n = 33, e = 3 y c = 31, pero no tiene d." / "El mensaje 4 llegó seguro al Cyberdemon." / "Clave pública para cifrar, clave privada para descifrar." El Cyberdemon muestra "4", el mensaje recibido.
+
+**Lo que dices:**
+"Y aquí termina la historia: el Imp tenía todo lo público (n, e y el mensaje cifrado) pero nunca tuvo d, y sin d no pudo descifrar nada. El mensaje llegó seguro al Cyberdemon, y el Imp… bueno, el Marine se encargó de él."
+
+**Para que lo entiendas tú:** la animación empieza sola al llegar al paso (el Marine dispara ~1 s después y el Imp cae ~0,6 s más tarde) y se repite cada vez que vuelves a entrar. Es solo un cierre narrativo: la seguridad viene de que el Imp no puede calcular d, no del disparo.
+
+## Cierre (se dice sobre el paso 9; ya cuenta dentro de sus 0:40)
 
 **Lo que dices:**
 "En resumen: la clave pública cifra y la privada descifra, y esa diferencia existe porque multiplicar es fácil y factorizar es difícil. El Imp ve todo el tráfico, pero sin poder factorizar n no entiende el contenido. Y una conexión con nuestra materia: justo por eso el análisis de tráfico no ve el contenido cifrado, y por eso un atacante activo intentaría otra cosa: cambiar la clave pública por la suya. Para eso existen los certificados. Gracias."

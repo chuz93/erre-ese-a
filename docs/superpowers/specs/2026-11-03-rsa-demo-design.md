@@ -104,3 +104,4 @@ Each step shows its equation in the lower strip with the live numbers highlighte
 - **The Marine receives the public key (step 4):** the Marine now has a speech bubble ("Recibo (e, n) = (3, 33)") and a key packet 🔑 travels from the Cyberdemon to the Marine; in step 5 the Marine's bubble reads "Cifro 4 con (3, 33)".
 - **Step 8 wheel simplified:** the exponent labels (4^0 to 4^4) and the exponent chains in its captions were removed; the wheel shows only the five values and the jumps 4 → 31 → 4.
 - **Presentation script:** `docs/guion-presentacion.md` (Spanish): timed step-by-step script, the math behind each step, likely questions and a plan B.
+- **Final slide (step 9, "El Imp nunca lo descifró"):** the Marine shoots and the Imp plays his death animation (frames cropped from the supplied sprite sheets), closing the story: the Imp never had `d`. The bullet tracer that was tried first was removed at the owner's request. The story is now **9 steps**.

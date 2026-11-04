@@ -10,6 +10,8 @@ export interface SceneState {
   marine: { bubble?: string };
   demon: { bubble?: string };
   imp: { bubble?: string; mood: "listening" | "cracking" | "winning" | "stuck" };
+  /** Final slide: the Marine shoots and the Imp dies (animated by story/finale.ts). */
+  finale?: boolean;
   /** Ciphertext travelling from the marine to the Cyberdemon. */
   wire?: { label: string };
   /** The public key travelling from the Cyberdemon to the Marine. */
@@ -180,6 +182,25 @@ export function buildSteps(engine: RsaEngine, demo: typeof DEMO = DEMO): Step[] 
         demon: { bubble: `${back}` },
         imp: { mood: "stuck" },
         size: "toy",
+      },
+    },
+    {
+      id: 9,
+      title: "El Imp nunca lo descifró",
+      caption: "Sin la clave privada d, el mensaje cifrado 31 no le sirve de nada al Imp.",
+      lines: [
+        line([`El Imp tiene n = ${n}, e = ${e} y c = ${c}, pero `, "plain"], ["no tiene d.", "secret"]),
+        line([`El mensaje ${back} llegó seguro al Cyberdemon.`, "plain"]),
+        line(["Clave pública para cifrar, clave privada para descifrar.", "plain"]),
+      ],
+      scene: {
+        marine: {},
+        demon: { bubble: `${back}` },
+        imp: { mood: "stuck", bubble: "No logré descifrarlo…" },
+        secret: [`φ = ${phi}`, `d = ${d}`],
+        board: [`e = ${e}`, `n = ${n}`],
+        finale: true,
+        size: "real",
       },
     },
   ];

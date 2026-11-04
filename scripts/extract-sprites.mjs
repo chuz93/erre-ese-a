@@ -9,6 +9,15 @@ const SPRITES = [
   { sheet: "assets/sprite-sheets/marine-sheet.png", frame: 0, out: "public/sprites/marine.png" },
   { sheet: "assets/sprite-sheets/imp-sheet.png", frame: 0, out: "public/sprites/imp.png" },
   { sheet: "assets/sprite-sheets/cyberdemon-sheet.png", frame: 0, out: "public/sprites/cyberdemon.png" },
+  // Final slide: the Marine aiming and firing (side view, gun pointing left; flipped when drawn)
+  { sheet: "assets/sprite-sheets/marine-sheet.png", frame: 16, out: "public/sprites/marine-aim.png" },
+  { sheet: "assets/sprite-sheets/marine-sheet.png", frame: 17, out: "public/sprites/marine-fire.png" },
+  // Final slide: the Imp's death animation, 5 frames from hit to lying on the floor
+  { sheet: "assets/sprite-sheets/imp-sheet.png", frame: 41, out: "public/sprites/imp-death-0.png" },
+  { sheet: "assets/sprite-sheets/imp-sheet.png", frame: 42, out: "public/sprites/imp-death-1.png" },
+  { sheet: "assets/sprite-sheets/imp-sheet.png", frame: 43, out: "public/sprites/imp-death-2.png" },
+  { sheet: "assets/sprite-sheets/imp-sheet.png", frame: 45, out: "public/sprites/imp-death-3.png" },
+  { sheet: "assets/sprite-sheets/imp-sheet.png", frame: 46, out: "public/sprites/imp-death-4.png" },
 ];
 
 for (const { sheet, frame, out } of SPRITES) {
