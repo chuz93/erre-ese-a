@@ -1,0 +1,180 @@
+:root {
+  --bg: #12090a;
+  --ink: #f3e6d8;
+  --muted: #d8c6b2;
+  --accent: #ffb36b;
+  --public: #6ee7a0;
+  --secret: #ff6b6b;
+  --result: #ffd84a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Segoe UI", system-ui, sans-serif;
+  overflow: hidden;
+}
+
+.viewport {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+}
+
+/* Everything is laid out in a 1920x1080 reference box and scaled to fit the window. */
+.deck {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  transform-origin: top left;
+}
+
+.loading {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  color: var(--muted);
+}
+
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 150px;
+  padding: 18px 60px 0;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 62px;
+  line-height: 1.1;
+  color: var(--accent);
+}
+
+.header p {
+  margin: 8px 0 0;
+  font-size: 32px;
+  line-height: 1.25;
+  color: var(--muted);
+}
+
+.stage {
+  position: absolute;
+  top: 160px;
+  left: 0;
+  width: 1920px;
+  height: 560px;
+  image-rendering: pixelated;
+}
+
+.equations {
+  position: absolute;
+  top: 730px;
+  left: 0;
+  width: 1920px;
+  height: 250px;
+  padding: 22px 60px;
+  background: #0c0707;
+  border-top: 4px solid #3a2420;
+  font-family: "Cascadia Mono", Consolas, monospace;
+  font-size: 46px;
+  line-height: 1.35;
+}
+
+.eq-line {
+  opacity: 0;
+  animation: fade-in 500ms ease-out forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tone-plain {
+  color: var(--ink);
+}
+.tone-public {
+  color: var(--public);
+  font-weight: 700;
+}
+.tone-secret {
+  color: var(--secret);
+  font-weight: 700;
+}
+.tone-result {
+  color: var(--result);
+  font-weight: 700;
+}
+
+.progress {
+  position: absolute;
+  top: 1000px;
+  left: 0;
+  width: 1920px;
+  height: 50px;
+  padding: 0 60px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  font-size: 28px;
+  color: var(--muted);
+}
+
+.dots {
+  display: flex;
+  gap: 10px;
+}
+
+.dot {
+  width: 54px;
+  height: 14px;
+  border-radius: 7px;
+  background: #3a2420;
+}
+.dot.done {
+  background: #8a5a3a;
+}
+.dot.on {
+  background: var(--accent);
+}
+
+.keys {
+  margin-left: auto;
+}
+
+kbd {
+  border: 2px solid #6a4a3a;
+  border-radius: 6px;
+  padding: 0 10px;
+  font-family: inherit;
+}
+
+.credit {
+  position: absolute;
+  top: 1054px;
+  left: 0;
+  width: 1920px;
+  padding: 0 60px;
+  font-size: 18px;
+  color: #8a7766;
+  text-align: right;
+}

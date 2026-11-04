@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { nextIndex } from "./navigation";
+import { isNavKey, nextIndex } from "./navigation";
 
 describe("nextIndex", () => {
   test("ArrowRight moves forward and ArrowLeft moves back", () => {
@@ -25,5 +25,14 @@ describe("nextIndex", () => {
   test("other keys leave the step unchanged", () => {
     expect(nextIndex(4, "a", 9)).toBe(4);
     expect(nextIndex(4, "Enter", 9)).toBe(4);
+  });
+});
+
+describe("isNavKey", () => {
+  test("recognises exactly the navigation keys", () => {
+    for (const key of ["ArrowRight", "ArrowLeft", "PageDown", "PageUp", "Home", "End"]) {
+      expect(isNavKey(key), key).toBe(true);
+    }
+    for (const key of ["f", "Enter", " ", "a"]) expect(isNavKey(key), key).toBe(false);
   });
 });

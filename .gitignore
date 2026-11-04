@@ -5,3 +5,4 @@ rsa-engine/target/
 .superpowers/
 next-env.d.ts
 *.tsbuildinfo
+.claude/

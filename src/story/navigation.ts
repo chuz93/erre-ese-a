@@ -16,3 +16,10 @@ export function nextIndex(current: number, key: string, total: number): number {
       return current;
   }
 }
+
+const NAV_KEYS = new Set(["ArrowRight", "ArrowLeft", "PageDown", "PageUp", "Home", "End"]);
+
+/** True for the keys that move between steps (the page prevents their default scrolling). */
+export function isNavKey(key: string): boolean {
+  return NAV_KEYS.has(key);
+}
